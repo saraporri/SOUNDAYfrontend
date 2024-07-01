@@ -1,0 +1,22 @@
+<h1>Sign up</h1>
+
+<form (ngSubmit)="signUp()">  <select name="role" id="role">
+    <option value="">--Please choose an option--</option>
+    <option value="fan">Fan</option>
+    <option value="Artist">Artist</option>
+  </select>
+
+  <input type="text" name="username"  class="form-control" placeholder="username" required>
+
+  <input type="password" name="password"  class="form-control" placeholder="password" required>
+
+  <input type="text" name="name"  class="form-control" placeholder="name" required>
+
+  <input type="text" name="lastName" class="form-control" placeholder="last name" required>
+
+  <input type="email" name="email"  class="form-control" placeholder="email" required>
+
+
+
+  <button type="submit" class="btn btn-success">Register</button>
+</form>
