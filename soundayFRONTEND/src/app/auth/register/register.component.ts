@@ -6,31 +6,33 @@ import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrl: './register.component.scss'
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-
-  registerData:Partial<IUser> = {
+  selectedRole: string = '';
+  registerData: Partial<IUser> = {
     username: "",
     password: "",
     name: "",
     lastName: "",
     email: "",
     role: ""
-  }
+  };
 
   constructor(
-    private authSvc:AuthService,
-    private router:Router
-    ){}
+    private authSvc: AuthService,
+    private router: Router
+  ) {}
 
-  signUp(){
+  signUp() {
+    this.registerData.role = this.selectedRole; 
     this.authSvc.register(this.registerData)
-    .subscribe(data => {
-
-      this.router.navigate(['/'])
-
-    })
+      .subscribe(data => {
+        this.router.navigate(['/']);
+      });
   }
 
+  onRoleChange(event: any) {
+    this.selectedRole = event.target.value;
+  }
 }

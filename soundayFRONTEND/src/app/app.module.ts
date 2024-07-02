@@ -8,6 +8,8 @@ import { NavbarComponent } from './components/navbar/navbar.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { HttpClientModule } from '@angular/common/http';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
+import { AuthModule } from './auth/auth.module';
+import { AuthRoutingModule } from './auth/auth-routing.module';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,7 @@ import { LandingPageModule } from './pages/landing-page/landing-page.module';
   imports: [
     BrowserModule,
     AppRoutingModule,HttpClientModule,
-    NgbModule,LandingPageModule
+    NgbModule,LandingPageModule,AuthRoutingModule
   ],
   providers: [],
   bootstrap: [AppComponent]
