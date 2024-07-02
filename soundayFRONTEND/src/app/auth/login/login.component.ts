@@ -11,7 +11,8 @@ import { ILogin } from '../../models/i-login';
 export class LoginComponent {
   loginData:ILogin = {
     email: '',
-    password: ''
+    password: '',
+    role:""
   }
 
   constructor(
@@ -20,11 +21,15 @@ export class LoginComponent {
     ){}
 
     signIn(){
-
       this.authSvc.login(this.loginData)
       .subscribe(data => {
-        this.router.navigate(['/'])
-      })
-
-    }
+        if (data.role === 'fan') {
+          this.router.navigate(['/user']);
+        } else if (data.role === 'artist') {
+          this.router.navigate(['/artist']);
+        } else {
+          this.router.navigate(['/']);
+        }
+      });
+  }
 }

@@ -7,6 +7,7 @@ import { IUser } from '../models/i-user';
 import { ILogin } from '../models/i-login';
 
 type AccessData ={
+  role: string;
   user:IUser,
   token:string
 }

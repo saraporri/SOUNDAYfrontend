@@ -25,10 +25,10 @@ export class RegisterComponent {
   ) {}
 
   signUp() {
-    this.registerData.role = this.selectedRole; 
+    this.registerData.role = this.selectedRole;
     this.authSvc.register(this.registerData)
       .subscribe(data => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/login']);
       });
   }
 
