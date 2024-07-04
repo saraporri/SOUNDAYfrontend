@@ -34,22 +34,40 @@
         </li>
 
       </ul>
-      <li class="nav-item" >
-        <a
-          class="nav-link"
-          [routerLink]="['/login']"
-          routerLinkActive="active"
-          >Login</a
-        >
-      </li>
-      <li class="nav-item" >
-        <a
-          class="nav-link"
-          [routerLink]="['/register']"
-          routerLinkActive="active"
-          >Sign up</a
-        >
-      </li>
-    </div>
+      <div class="d-flex">
+        <li class="nav-item" *ngIf="userLogged">
+          <a
+            class="nav-link me-3"
+            [routerLink]="['/profile']"
+            routerLinkActive="active"
+            >Profilo</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="userLogged">
+          <button class="btn btn-outline-danger" (click)="logout()">
+            Logout
+          </button>
+        </li>
+
+        <li class="nav-item" *ngIf="!userLogged">
+          <a
+            class="nav-link"
+            [routerLink]="['/login']"
+            routerLinkActive="active"
+            >Login</a
+          >
+        </li>
+        <li class="nav-item" *ngIf="!userLogged">
+          <a
+            class="nav-link"
+            [routerLink]="['/register']"
+            routerLinkActive="active"
+            >Sign up</a
+          >
+        </li>
+      </div>
+
   </div>
+    </div>
+
 </nav>

@@ -16,6 +16,9 @@ type AccessData ={
   providedIn: 'root'
 })
 export class AuthService {
+  restore() {
+    throw new Error('Method not implemented.');
+  }
   authSubject = new BehaviorSubject<IUser|null>(null);
 
   user$ = this.authSubject.asObservable()

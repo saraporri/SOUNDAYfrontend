@@ -10,6 +10,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { AuthModule } from './auth/auth.module';
 import { AuthRoutingModule } from './auth/auth-routing.module';
+import { ArtistModule } from './pages/artist/artist.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,7 @@ import { AuthRoutingModule } from './auth/auth-routing.module';
   imports: [
     BrowserModule,
     AppRoutingModule,HttpClientModule,
-    NgbModule,LandingPageModule,AuthRoutingModule
+    NgbModule,LandingPageModule,AuthRoutingModule,ArtistModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

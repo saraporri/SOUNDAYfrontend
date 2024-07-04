@@ -6,18 +6,23 @@
 <hr>
 <div>
 <p>Your events</p>
-<div class="card ">
+<div class="card">
   <div class="card-body">
-    <h5 class="card-title">CITY</h5>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">date</li>
-    <li class="list-group-item">TOUR TITLE</li>    <li class="list-group-item">likes</li>
-
-  </ul>
-  <div class="card-body">
-    <button>edit</button>
-  </div></div>
+    <h5 class="card-title">{{ event.city }}</h5>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">{{ event.eventDate | date }}</li>
+      <li class="list-group-item">{{ event.tourName }}</li>
+      <!-- Aggiungi qui il numero di like se disponibile -->
+    </ul>
+    <div class="card-body">
+      <button class="btn btn-primary" (click)="editEvent()">Edit</button>
+    </div>
+  </div>
 </div>
+
+
+
+
 <hr>
 
 <div>
