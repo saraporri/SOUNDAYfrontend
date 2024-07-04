@@ -10,7 +10,9 @@
 
     <ul class="list-group list-group-flush">
       <li class="list-group-item">City</li>
-      <li class="list-group-item">date</li> <li class="list-group-item">venue</li>    <li class="list-group-item">liked toggle?
+      <li class="list-group-item">date</li> <li class="list-group-item">venue</li>    <li class="list-group-item">
+        <i [ngClass]="{'bi bi-heart': !event.likedByCurrentUser, 'bi bi-heart-fill': event.likedByCurrentUser}"
+           class="icon1 text-white" (click)="toggleLike(event)"></i> {{ event.likeCount }}
       </li>
 
     </ul>

@@ -1,4 +1,6 @@
 export interface IEvent {
+likedByCurrentUser: any
+likeCount: any
 tourName:string
 tourPic:string
 eventDate:string

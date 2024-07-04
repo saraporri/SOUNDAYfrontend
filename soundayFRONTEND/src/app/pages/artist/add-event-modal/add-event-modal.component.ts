@@ -22,7 +22,9 @@ export class AddEventModalComponent {
       venueZip: '',
       venueCity: '',
       venueCountry: ''
-    }
+    },
+    likedByCurrentUser: undefined,
+    likeCount: undefined
   };
 
   @Output() eventAdded = new EventEmitter<IEvent>();
