@@ -1,12 +1,13 @@
+import { IEvent } from './../../../models/i-event';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
-import { IEvent } from '../../../models/i-event';
+
 @Component({
-  selector: 'app-event-edit-modal',
+  selector: 'app-edit-event-modal',
   templateUrl: './edit-event-modal.component.html',
   styleUrls: ['./edit-event-modal.component.scss']
 })
-export class EventEditModalComponent {
+export class EditEventModalComponent {
   @Input() event!: IEvent;
   @Output() eventUpdated = new EventEmitter<IEvent>();
 

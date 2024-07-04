@@ -1,7 +1,7 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IEvent } from '../../models/i-event';
-import { EventEditModalComponent } from './edit-event-modal/edit-event-modal.component';
+import { EditEventModalComponent } from './edit-event-modal/edit-event-modal.component';
 import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 
 @Component({
@@ -25,12 +25,8 @@ openAddEventModal() {
   constructor(private modalService: NgbModal) {}
 
   editEvent() {
-    if (!this.event) {
-      console.error('Event is undefined');
-      return;
-    }
-    const modalRef = this.modalService.open(EventEditModalComponent);
-    modalRef.componentInstance.event = { ...this.event }; // Pass a copy of the event
+    const modalRef = this.modalService.open(EditEventModalComponent);
+    modalRef.componentInstance.event = { ...this.event }; // Passa una copia dell'evento da modificare
 
     modalRef.componentInstance.eventUpdated.subscribe((updatedEvent: IEvent) => {
       this.event = updatedEvent;
