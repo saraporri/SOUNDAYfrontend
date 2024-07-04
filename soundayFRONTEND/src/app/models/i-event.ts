@@ -1,6 +1,5 @@
 export interface IEvent {
-likedByCurrentUser: any
-likeCount: any
+id:string
 tourName:string
 tourPic:string
 eventDate:string
@@ -8,6 +7,9 @@ eventTime:string
 city:string
 region:string
 country:string
+attendedCount: number
+likedByCurrentUser: boolean
+likeCount: number
 venue:Venue
 }
 export interface Venue

@@ -9,6 +9,7 @@ import { IEvent } from '../../models/i-event';
 
 export class UserComponent {
   event: IEvent = {
+    id:"",
     tourName: 'Example Tour',
     tourPic: 'tour-pic.jpg',
     eventDate: '2024-07-04',
@@ -24,7 +25,8 @@ export class UserComponent {
       venueCountry: 'Example Country'
     },
     likeCount: 0,
-    likedByCurrentUser: false
+    likedByCurrentUser: false,
+    attendedCount:0
   };
 
   constructor() {}
@@ -39,5 +41,11 @@ export class UserComponent {
       // Aggiungi qui la logica per rimuovere il like dal backend se necessario
     }
     // Puoi anche emettere un evento o eseguire altre azioni dopo il toggle del like
+  }   incrementAttended(eventId: string) {
+    if (this.event.id === eventId) {
+      this.event.attendedCount++;
+      // Aggiungi qui la logica per salvare l'aggiornamento di attendedCount nel backend se necessario
+      console.log(`Attended count for event ${eventId} incremented.`);
+    }
   }
 }
