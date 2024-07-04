@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IEvent } from '../../models/i-event';
 import { EventEditModalComponent } from './edit-event-modal/edit-event-modal.component';
+import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 
 @Component({
   selector: 'app-artist',
@@ -10,6 +11,16 @@ import { EventEditModalComponent } from './edit-event-modal/edit-event-modal.com
 })
 export class ArtistComponent {
   @Input() event!: IEvent; // Usa il tipo opzionale
+
+openAddEventModal() {
+  const modalRef = this.modalService.open(AddEventModalComponent);
+
+  modalRef.componentInstance.eventAdded.subscribe((newEvent: IEvent) => {
+    // Aggiungi la logica per gestire il nuovo evento aggiunto
+    console.log('New Event added:', newEvent);
+    // Esegui altre azioni come salvataggio nel backend, aggiornamento UI, etc.
+  });
+}
 
   constructor(private modalService: NgbModal) {}
 

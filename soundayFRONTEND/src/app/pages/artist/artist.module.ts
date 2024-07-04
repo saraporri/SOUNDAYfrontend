@@ -5,11 +5,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ArtistComponent } from './artist.component';
 import { EventEditModalComponent } from './edit-event-modal/edit-event-modal.component';
 import { ArtistRoutingModule } from './artist-routing.module';
+import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 
 @NgModule({
   declarations: [
     ArtistComponent,
-    EventEditModalComponent
+    EventEditModalComponent,
+    AddEventModalComponent
   ],
   imports: [
     CommonModule,

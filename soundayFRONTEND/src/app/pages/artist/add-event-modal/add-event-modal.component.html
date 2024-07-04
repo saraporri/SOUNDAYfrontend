@@ -1,0 +1,23 @@
+<div class="modal-header">
+  <h4 class="modal-title">Add New Event</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="mb-3">
+    <label for="tourName" class="form-label">Tour Name</label>
+    <input type="text" class="form-control" id="tourName" [(ngModel)]="newEvent.tourName">
+  </div>
+  <div class="mb-3">
+    <label for="eventDate" class="form-label">Event Date</label>
+    <input type="date" class="form-control" id="eventDate" [(ngModel)]="newEvent.eventDate">
+  </div>
+  <div class="mb-3">
+    <label for="city" class="form-label">City</label>
+    <input type="text" class="form-control" id="city" [(ngModel)]="newEvent.city">
+  </div>
+  <!-- Aggiungi altri campi necessari -->
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+</div>
