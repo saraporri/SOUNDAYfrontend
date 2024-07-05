@@ -8,6 +8,7 @@ import { IEvent } from '../../models/i-event';
 })
 
 export class UserComponent {
+  searchQuery: string = '';
   event: IEvent = {
     id:"",
     tourName: 'Example Tour',
@@ -47,5 +48,9 @@ export class UserComponent {
       // Aggiungi qui la logica per salvare l'aggiornamento di attendedCount nel backend se necessario
       console.log(`Attended count for event ${eventId} incremented.`);
     }
+  }
+
+  onSearch() {
+    console.log(this.searchQuery); // Qui puoi gestire la logica di ricerca
   }
 }

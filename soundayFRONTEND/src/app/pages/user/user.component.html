@@ -1,7 +1,9 @@
 <h1>WELCOME BACK, FAN!</h1>
 
 
-<p>possible search bar here</p><hr>
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search for concerts, artists or cities...">
+</div><hr>
 <div>
   <p>Your upcoming events</p>
   <div class="card ">
