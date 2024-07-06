@@ -1,0 +1,35 @@
+<!-- edit-profile-modal.component.html -->
+<div class="modal-header">
+  <h4 class="modal-title">Edit Profile</h4>
+  <button type="button" class="btn-close" aria-label="Close" (click)="activeModal.dismiss('Cross click')"></button>
+</div>
+<div class="modal-body">
+  <div class="mb-3">
+    <label for="username" class="form-label">Username</label>
+    <input type="text" class="form-control" id="username" [(ngModel)]="user.username">
+  </div>
+  <div class="mb-3">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" [(ngModel)]="user.email">
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" [(ngModel)]="user.password">
+  </div>
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input type="text" class="form-control" id="name" [(ngModel)]="user.name">
+  </div>
+  <div class="mb-3">
+    <label for="lastName" class="form-label">Last Name</label>
+    <input type="text" class="form-control" id="lastName" [(ngModel)]="user.lastName">
+  </div>
+  <div class="mb-3">
+    <label for="avatar" class="form-label">Avatar URL</label>
+    <input type="text" class="form-control" id="avatar" [(ngModel)]="user.avatar">
+  </div>
+</div>
+<div class="modal-footer">
+  <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Cancel</button>
+  <button type="button" class="btn btn-primary" (click)="save()">Save</button>
+</div>

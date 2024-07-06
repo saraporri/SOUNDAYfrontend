@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { IEvent } from '../../models/i-event';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 
 @Component({
   selector: 'app-user',
@@ -29,8 +31,15 @@ export class UserComponent {
     likedByCurrentUser: false,
     attendedCount:0
   };
+  user = {
+    username: 'johnDoe',
+    email: 'john@example.com',
+    password: '',
+    name: 'John',
+    lastName: 'Doe',
+    avatar: 'https://example.com/avatar.jpg'
+  };
 
-  constructor() {}
 
   toggleLike(event: IEvent) {
     event.likedByCurrentUser = !event.likedByCurrentUser;
@@ -52,5 +61,19 @@ export class UserComponent {
 
   onSearch() {
     console.log(this.searchQuery); // Qui puoi gestire la logica di ricerca
+  }
+  constructor(private modalService: NgbModal) {}
+
+  editProfile() {
+    const modalRef = this.modalService.open(EditProfileModalComponent);
+    modalRef.componentInstance.user = { ...this.user };
+
+    modalRef.result.then((result) => {
+      if (result) {
+        this.user = result;
+      }
+    }).catch((error) => {
+      console.log('Modal dismissed:', error);
+    });
   }
 }
