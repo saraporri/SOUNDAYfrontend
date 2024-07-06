@@ -17,7 +17,7 @@ import { ShowArtistsComponent } from './show-artists/show-artists.component';
     CommonModule,
     FormsModule,
     NgbModule,
-    ArtistRoutingModule
+    ArtistRoutingModule,
   ]
 })
 export class ArtistModule { }
