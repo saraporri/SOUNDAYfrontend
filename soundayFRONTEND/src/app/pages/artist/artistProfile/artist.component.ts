@@ -1,8 +1,8 @@
 import { Component, Input } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { IEvent } from '../../models/i-event';
-import { EditEventModalComponent } from './edit-event-modal/edit-event-modal.component';
-import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
+import { IEvent } from '../../../models/i-event';
+import { EditEventModalComponent } from "../edit-event-modal/edit-event-modal.component";
+import { AddEventModalComponent } from '../add-event-modal/add-event-modal.component';
 
 @Component({
   selector: 'app-artist',

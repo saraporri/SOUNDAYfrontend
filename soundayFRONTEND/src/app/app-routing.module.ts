@@ -4,7 +4,7 @@ import { GuestGuard } from './auth/guest.guard';
 import { LoginComponent } from './auth/login/login.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { LandingPageComponent } from './pages/landing-page/landing-page.component';
-import { ArtistComponent } from './pages/artist/artist.component';
+import { ArtistComponent } from './pages/artist/artistProfile/artist.component';
 import { UserComponent } from './pages/user/user.component';
 import { EventsComponent } from './pages/events/events.component';
 
