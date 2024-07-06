@@ -3,7 +3,7 @@
     <a class="navbar-brand" href="#"
        >
 
-       <img class="logo" src="https://media.discordapp.net/attachments/1224995749545377884/1258510897568026725/2.png?ex=66884f1b&is=6686fd9b&hm=4da1ed780ef33be1e65304ed14ac2c93552ce8b6d648369dfc09a62b4b886405&=&format=webp&quality=lossless" alt="logo">
+       <img class="logo" src="../../../assets/7.png" alt="logo">
 
        </a>
     <button
@@ -38,8 +38,8 @@
         </li>
 
       </ul>
-      <div class="d-flex">
-        <li class="nav-item" *ngIf="userLogged">
+      <div class="d-flex list-unstyled">
+        <li class="nav-item mx-3" *ngIf="userLogged">
           <a
             class="nav-link text-white me-3"
             [routerLink]="['/profile']"
@@ -53,20 +53,20 @@
           </button>
         </li>
 
-        <li class="nav-item" *ngIf="!userLogged">
+        <li class="nav-item mx-3" *ngIf="!userLogged">
           <a
-            class="nav-link text-white"
+            class="nav-link text-white "
             [routerLink]="['/login']"
             routerLinkActive="active"
             >Login</a
           >
         </li>
-        <li class="nav-item" *ngIf="!userLogged">
+        <li class="nav-item ml-3" *ngIf="!userLogged">
           <a
             class="nav-link text-white"
             [routerLink]="['/register']"
             routerLinkActive="active"
-            >Sign up</a
+            >Register</a
           >
         </li>
       </div>
