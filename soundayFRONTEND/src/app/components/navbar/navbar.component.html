@@ -30,15 +30,15 @@
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" [routerLink]="['/events']" href="#">Events</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="['/user']" href="#">Fans</a>
-        </li><li class="nav-item">
-          <a class="nav-link text-white" [routerLink]="['/artist']" href="#">Artist</a>
-        </li>
-        <li class="nav-item">
-        <a class="nav-link text-white" [routerLink]="['/show-artists']">All Artists</a>
+        </li> <li class="nav-item">
+        <a class="nav-link text-white" [routerLink]="['/show-artists']">Our Artists</a>
       </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/user']" href="#">Fan Profile</a>
+        </li><li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/artist']" href="#">Artist Profile</a>
+        </li>
+
       </ul>
       <div class="d-flex list-unstyled">
         <li class="nav-item mx-3" *ngIf="userLogged">
