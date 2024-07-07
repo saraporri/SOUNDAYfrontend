@@ -5,44 +5,7 @@
   filter: contrast(1.75) grayscale(100%);
 }
 
-.search-bar {
-  position:absolute;
 
-  left: 50%;
-  bottom:0%;
-  transform: translate(-50%, -50%);
-  width: 800px;
-  margin: 0 auto;
-}
-
-input[type="text"] {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
-}
-
-.search-results {
-  position: absolute;
-  width: 100%;
-  background-color: white;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 10;
-}
-
-.search-results ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-.search-results li {
-  padding: 8px;
-  border-bottom: 1px solid #ddd;
-}
-
-.search-results li:last-child {
-  border-bottom: none;
-}
 
 
 
@@ -53,13 +16,11 @@ input[type="text"] {
 
 
 .btn {
-  padding: 0.9em 1.6em;
   border: none;
   outline: none;
   color: #FFF;
   font-family: inherit;
-  font-weight: 500;
-  font-size: 17px;
+  font-size: 16px;
   cursor: pointer;
   position: relative;
   z-index: 0;
@@ -125,3 +86,81 @@ input[type="text"] {
  }
 
 
+
+
+
+ //searchbar
+ .search-bar-position{position:absolute;
+  left: 50%;
+  bottom:0%;
+  transform: translate(-50%, -50%);
+  margin: 0 auto;}
+
+ .search-bar {
+  position: relative;
+  width: 800px;
+}
+
+.ui-input {
+  width: 100%;
+  padding: 10px 10px 10px 40px;
+  font-size: 1.2em;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  outline: none;
+  background-color: transparent;
+  transition: border-color 0.3s;
+  color: #FFF;
+  text-shadow: 0px 0px 10px rgba(0, 0, 0, 1);
+}
+
+.ui-input:focus {
+  border-color: #ffffff;
+}
+
+.ui-input-underline {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 2px;
+  width: 100%;
+  background-color: #6c63ff;
+  transform: scaleX(0);
+  transition: transform 0.5s;
+}
+
+.ui-input:focus + .ui-input-underline {
+  transform: scaleX(1);
+}
+
+.ui-input-highlight {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 100%;
+  width: 0;
+  background-color: rgba(255, 255, 255, 0.4);
+  transition: width 0.3s;
+}
+
+.ui-input:focus ~ .ui-input-highlight {
+  width: 100%;
+}
+
+.ui-input-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #999;
+  transition: color 0.3s;
+}
+
+.ui-input:focus ~ .ui-input-icon {
+  color: #ffffff;
+}
+
+.ui-input-icon svg {
+  width: 20px;
+  height: 20px;
+}

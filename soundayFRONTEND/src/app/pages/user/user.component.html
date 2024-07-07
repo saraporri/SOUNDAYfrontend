@@ -3,11 +3,30 @@
 
 <div class=" d-flex justify-content-between align-items-center"><h1 class="toptitle">WELCOME BACK, FAN!</h1><button  (click)="editProfile()" class=" btn-top-right ">Edit your profile</button></div>
 
+<div class="search-bar-position">
+<div class="search-bar">
+  <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search for concerts, artists or cities..." class="ui-input">
+
+  <div class="ui-input-underline"></div>
+  <div class="ui-input-highlight"></div>
+  <div class="ui-input-icon">
+    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <path
+        stroke-linejoin="round"
+        stroke-linecap="round"
+        stroke-width="2"
+        stroke="currentColor"
+        d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
+      ></path>
+    </svg>
+  </div></div>
+</div>
+
+</div>
 
 
-<div class="search-bar ">
-  <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search for concerts, artists or cities...">
-</div></div>
+
+
 
 
 
