@@ -34,12 +34,14 @@
 <div>
   <p>Your upcoming events</p>
   <div class="card ">
-    <div class="card-body">
       <h5 class="card-title">ARTIST</h5>    <p class="card-text">Tour name</p>
-
-    <ul class="list-group list-group-flush">
+      <div class="gradient-line"></div>
       <li class="list-group-item">City</li>
-      <li class="list-group-item">date</li> <li class="list-group-item">venue</li>
+
+      <li class="list-group-item">date</li>
+      <li class="list-group-item">venue</li>
+      <div class="gradient-line"></div>
+
 
 
 
@@ -79,8 +81,7 @@
 
 
 
-    </ul>
-    <div class="card-body">
+    <div class="card-body2">
       <li class="list-group-item">
         <button class="btn " (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
         {{ event.attendedCount }} Attended
