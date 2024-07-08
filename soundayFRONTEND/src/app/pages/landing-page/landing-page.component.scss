@@ -31,17 +31,27 @@ h1:hover {
 
 }
 
-.auth{
+
+//login register btn
+.auth-btn a {
   font-size: 2rem;
-transition: 0.5s ease-in-out;
-&:hover {text-shadow:
-  1px 1px 5px rgba(0,34,136,1),
-  1px 1px 8px rgba(0,93,200,1),
-  1px 1px 15px rgba(2,138,195,1),
-  1px 1px 20px rgba(0,202,178,1),
-  1px 1px 25px rgba(199,8,173,1),
-  1px 1px 35px rgba(144,25,183,1);}
+  border-radius: 5px;
+  text-decoration: none;
+  border: 2px solid #fff;
+  background-color: rgba(33, 37, 41, 0.8);
+  backdrop-filter: blur(8px);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease-in-out;
 }
+
+.auth-btn a:hover {
+  background-color: rgba(33, 37, 41, 0.2);}
+
+
+
+
+
+
+
 
 
 .background-landing{ background-image: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.2)),
