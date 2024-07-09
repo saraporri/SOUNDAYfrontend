@@ -92,31 +92,34 @@
   <div>
     <p>You were there!</p>
     <div class="card ">
-      <div class="card-body">
-        <h5 class="card-title">ARTIST</h5>
-      <ul class="list-group list-group-flush"><li class="list-group-item">TOUR TITLE</li>
-        <li class="list-group-item">date</li>
-          <li class="list-group-item">        {{ event.attendedCount }} Attended
-          </li>
+      <h5 class="card-title">ARTIST</h5>    <p class="card-text">Tour name</p>
+      <div class="gradient-line"></div>
 
-      </ul>
-     </div>
-    </div>
+      <li class="list-group-item">date</li>
+      <div class="gradient-line"></div>
+
+
+
+
+
+    <div class="card-body2">
+      <li class="list-group-item">
+        {{ event.attendedCount }} Attended
+      </li>    </div></div>
     <div class="gradient-line my-5"></div>
     <div>
   <p>Your favourite artists events</p>
   <div class="card ">
-    <div class="card-body">
       <h5 class="card-title">ARTIST</h5>
-    <ul class="list-group list-group-flush"> <li class="list-group-item">TOUR TITLE</li>
+     <li class="list-group-item">TOUR TITLE</li>
+     <div class="gradient-line"></div>
+
       <li class="list-group-item">city</li>
       <li class="list-group-item">date</li>
+      <div class="gradient-line"></div>
+
         <li class="list-group-item">likes</li>
 
-    </ul>
-    <div class="card-body">
-
-      <li class="list-group-item">
         <div class="con-like">
           <input class="like" type="checkbox" title="like" [checked]="event.likedByCurrentUser" (change)="toggleLike(event)">
           <div class="checkmark">
@@ -136,7 +139,5 @@
             </svg>
           </div>
         </div>   {{ event.likeCount }}
-      </li>
-    </div></div>
   </div>
 </div>

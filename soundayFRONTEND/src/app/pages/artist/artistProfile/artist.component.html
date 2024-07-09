@@ -16,17 +16,11 @@
 <div class="container my-5">
 <p>Your events</p>
 <div class="card">
-  <div class="card-body">
     <h5 class="card-title">{{ event.city }}</h5>
-    <ul class="list-group list-group-flush">
-      <li class="list-group-item">{{ event.eventDate | date }}</li>
+      <li class="list-group-item">{{ event.eventDate | date }} </li>
       <li class="list-group-item">{{ event.tourName }}</li>
       <!-- Aggiungi qui il numero di like se disponibile -->
-    </ul>
-    <div class="card-body">
       <button class="btn btn-primary" (click)="editEvent()">Edit</button>
-    </div>
-  </div>
 </div>
 
 
@@ -37,14 +31,15 @@
 <div>
 <p>Past events</p>
 <div class="card ">
-  <div class="card-body">
     <h5 class="card-title">CITY</h5>
-  <ul class="list-group list-group-flush">
-    <li class="list-group-item">date</li>
-    <li class="list-group-item">TOUR TITLE</li>    <li class="list-group-item">3445 attended</li>
+    <div class="gradient-line"></div>
 
-  </ul>
- </div>
+    <li class="list-group-item">date</li>
+    <li class="list-group-item">TOUR TITLE</li>
+    <div class="gradient-line"></div>
+
+     <li class="list-group-item">3445 attended</li>
+
 </div>
 
 </div>
@@ -52,12 +47,10 @@
 <div>
 <p>Your best fans</p>
 <div class="card ">
-  <div class="card-body">
     <h5 class="card-title">FANGIRL</h5>
-  <ul class="list-group list-group-flush">
+    <div class="gradient-line"></div>
+
     <li class="list-group-item">attended 45 concerts</li>
 
 
-  </ul>
-  </div>
 </div></div>

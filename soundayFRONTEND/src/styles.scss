@@ -2,18 +2,17 @@
 
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Wittgenstein:ital,wght@0,400..900;1,400..900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 
 .toptitle{padding-top: 50px;
+  text-transform: uppercase;
   font-size: 4rem;
 margin-left: 2rem;   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
 }
 
 body
-{font-family: "Lato";
-
-
+{font-family: "Quicksand";
 
 }
 
@@ -72,13 +71,11 @@ filter: grayscale(100%);
   display: flex;
   align-items: center;
   justify-content: center;
-  user-select: none;
   font-weight: bolder;
   color: black;
 }
 
 .card:hover {
-  border: 1px solid black;
   transform: scale(1.05);
 }
 
