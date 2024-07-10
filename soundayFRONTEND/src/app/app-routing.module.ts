@@ -9,7 +9,7 @@ import { UserComponent } from './pages/user/user.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ShowArtistsComponent } from './pages/artist/show-artists/show-artists.component';
 
-const routes: Routes = [  {path: '', component: LandingPageComponent,pathMatch:'full' },
+const routes: Routes = [  {path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
 { path: 'register', component: RegisterComponent, canActivate: [GuestGuard] },
 {path:"artist",component:ArtistComponent},

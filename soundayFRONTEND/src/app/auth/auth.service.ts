@@ -1,115 +1,88 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.development';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environment';
 import { IUser } from '../models/i-user';
 import { ILogin } from '../models/i-login';
-
-type AccessData ={
-  role: string;
-  user:IUser,
-  token:string
-}
+import { JwtHelperService } from '@auth0/angular-jwt';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   restore() {
     throw new Error('Method not implemented.');
   }
-  authSubject = new BehaviorSubject<IUser|null>(null);
+  private apiUrl = `${environment.apiUrl}`;
+  private jwtHelper: JwtHelperService;
+  authSubject: any;
+  user$: any;
 
-  user$ = this.authSubject.asObservable()
-  isLoggedIn$ = this.user$.pipe(
-    map(user => !!user),
-    tap(user => this.syncIsLoggedIn = user)
-  )
-  syncIsLoggedIn:boolean = false;
-  jwtHelper: any;
-
-  constructor(
-    private http:HttpClient,
-    private router:Router
-  ) {
-
-    this.restoreUser()
+  constructor(private http: HttpClient) {
+    this.jwtHelper = new JwtHelperService();
+    this.restoreUser();
   }
 
-  registerUrl:string = environment.registerUrl
-  loginUrl:string = environment.loginUrl
-
-  register(newUser:Partial<IUser>):Observable<AccessData>{
-    return this.http.post<AccessData>(this.registerUrl, newUser)
+  registerUser(user: IUser): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/register/users`, user);
   }
 
-  login(loginData:ILogin):Observable<AccessData>{
-    return this.http.post<AccessData>(this.loginUrl,loginData)
-    .pipe(tap(data => {
-
-      this.authSubject.next(data.user)
-      localStorage.setItem('accessData', JSON.stringify(data))
-
-      this.autoLogout(data.token)
-
-    }))
-  }
-  logout(){
-
-    this.authSubject.next(null)
-    localStorage.removeItem('accessData')
-
-    this.router.navigate(['/auth/login'])
-
-  }
-  getAccessToken():string{
-    const userJson = localStorage.getItem('accessData')
-    if(!userJson) return '';
-
-    const accessData:AccessData = JSON.parse(userJson)
-    if(this.jwtHelper.isTokenExpired(accessData.token)) return '';
-
-    return accessData.token
-  }
-  autoLogout(jwt:string){
-    const expDate = this.jwtHelper.getTokenExpirationDate(jwt) as Date;
-    const expMs = expDate.getTime() - new Date().getTime();
-    setTimeout(()=>{
-      this.logout()
-    },expMs)
-  }
-  restoreUser(){
-
-    const userJson = localStorage.getItem('accessData')
-    if(!userJson) return;
-
-    const accessData:AccessData = JSON.parse(userJson)
-    if(this.jwtHelper.isTokenExpired(accessData.token)) return;
-
-
-    this.authSubject.next(accessData.user)
-    this.autoLogout(accessData.token)
-
+  registerArtist(artist: IUser): Observable<any> {
+    artist.roles = 'artist';
+    return this.http.post<any>(`${this.apiUrl}/users/registerArtist`, artist);
   }
 
-  errors(err: any) {
-    switch (err.error) {
-        case "Email and Password are required":
-            return new Error('Email e password obbligatorie');
-            break;
-        case "Email already exists":
-            return new Error('Utente esistente');
-            break;
-        case 'Email format is invalid':
-            return new Error('Email scritta male');
-            break;
-        case 'Cannot find user':
-            return new Error('utente inesistente');
-            break;
-            default:
-        return new Error('Errore');
-            break;
+  login(credentials: ILogin): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/users/login`, credentials);
+  }
+
+  isAuthenticated(): boolean {
+    const token = this.getToken();
+    return token ? !this.jwtHelper.isTokenExpired(token) : false;
+  }
+
+  setToken(token: string): void {
+    localStorage.setItem('token', token);
+  }
+
+  getToken(): string | null {
+    return localStorage.getItem('token');
+  }
+
+  setUser(user: IUser): void {
+    localStorage.setItem('user', JSON.stringify(user));
+  }
+
+  getUser(): IUser | null {
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      return JSON.parse(userJson) as IUser;
     }
-}
+    return null;
+  }
+
+  restoreUser(): void {
+    const userJson = localStorage.getItem('accessData');
+    if (!userJson) return;
+
+    const accessData = JSON.parse(userJson);
+    if (this.jwtHelper.isTokenExpired(accessData.token)) return;
+
+    this.authSubject.next(accessData.user);
+    this.autoLogout(accessData.token);
+  }
+
+  autoLogout(token: string): void {
+    const expDate = this.jwtHelper.getTokenExpirationDate(token) as Date;
+    const expMs = expDate.getTime() - new Date().getTime();
+    setTimeout(() => {
+      this.logout();
+    }, expMs);
+  }
+
+  logout(): void {
+    this.authSubject.next(null);
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+  }
 }

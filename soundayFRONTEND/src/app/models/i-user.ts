@@ -1,9 +1,25 @@
 export interface IUser {
-  username:string
-  email:string
-  password:string
-  name:string
-  lastName:string
-  avatar:string
-  role:string
+  id: number;
+
+  username: string;
+
+  password: string;
+
+  email: string;
+
+  firstName: string;
+
+  lastName: string;
+
+  roles: string;
+
+  followersCount: number;
+
+  likeEvents: number;
+
+  likeArtists: number;
+
+  events: string[];
+
+  partecipation: number;
 }

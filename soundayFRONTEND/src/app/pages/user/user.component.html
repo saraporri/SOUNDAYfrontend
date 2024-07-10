@@ -67,7 +67,7 @@
               <polygon class="poly" points="80,80 70,70"></polygon>
             </svg>
           </div>
-        </div>   {{ event.likeCount }}
+        </div>   {{ event.likesCount }}
       </li>
 
 
@@ -84,7 +84,7 @@
     <div class="card-body2">
       <li class="list-group-item">
         <button class="btn " (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
-        {{ event.attendedCount }} Attended
+        {{ event.participantsCount }} Attended
       </li>    </div></div>
   </div>  <div class="gradient-line my-5"></div>
 
@@ -104,7 +104,7 @@
 
     <div class="card-body2">
       <li class="list-group-item">
-        {{ event.attendedCount }} Attended
+        {{ event.participantsCount }} Attended
       </li>    </div></div>
     <div class="gradient-line my-5"></div>
     <div>
@@ -138,6 +138,6 @@
               <polygon class="poly" points="80,80 70,70"></polygon>
             </svg>
           </div>
-        </div>   {{ event.likeCount }}
+        </div>   {{ event.likesCount }}
   </div>
 </div>

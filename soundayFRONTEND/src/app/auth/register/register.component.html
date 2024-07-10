@@ -10,6 +10,11 @@
   <div *ngIf="selectedRole === 'artist'">
     <label for="username" class="label">Artist name</label>
     <input type="text" id="username" name="username" [(ngModel)]="registerData.username" required class="input">
+    <label for="name" class="label">First name</label>
+    <input type="text" id="name" name="name" [(ngModel)]="registerData.firstName" required class="input">
+    <label for="lastName" class="label">Last name</label>
+    <input type="text" id="lastName" name="lastName" [(ngModel)]="registerData.lastName" required class="input">
+
     <label for="mail" class="label">Email</label>
     <input type="email" id="email" name="email" [(ngModel)]="registerData.email" required class="input">
     <label for="password" class="label">Password</label>
@@ -20,7 +25,7 @@
     <label for="username" class="label">Username</label>
     <input type="text" id="username" name="username" [(ngModel)]="registerData.username" required class="input">
     <label for="name" class="label">First name</label>
-    <input type="text" id="name" name="name" [(ngModel)]="registerData.name" required class="input">
+    <input type="text" id="name" name="name" [(ngModel)]="registerData.firstName" required class="input">
     <label for="lastName" class="label">Last name</label>
     <input type="text" id="lastName" name="lastName" [(ngModel)]="registerData.lastName" required class="input">
     <label for="email" class="label">Email</label>
@@ -29,5 +34,5 @@
     <input type="password" id="password" name="password" [(ngModel)]="registerData.password" required class="input">
   </div>
 
-  <button type="submit" class="submit">Register</button>
+  <button type="submit" class="submit" >Register</button>
 </form>

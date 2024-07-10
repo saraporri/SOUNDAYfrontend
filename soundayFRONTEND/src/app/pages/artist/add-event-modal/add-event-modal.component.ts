@@ -8,25 +8,17 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   styleUrl: './add-event-modal.component.scss'
 })
 export class AddEventModalComponent {
-  newEvent: IEvent = {
-    tourName: '',
-    tourPic: '',
-    eventDate: '',
-    eventTime: '',
-    city: '',
-    region: '',
-    country: '',
-    venue: {
-      venueName: '',
-      venueStreet: '',
-      venueZip: '',
-      venueCity: '',
-      venueCountry: ''
-    },
-    likedByCurrentUser: false,
-    likeCount: 0,
-    attendedCount: 0,
-    id: ''
+  event: IEvent = {
+    id: 0,
+    title: "",
+    dateTime: new Date('2024-07-15T19:00:00'),
+    eventDate: new Date('2024-07-15'),
+    location: "",
+   city:"",
+
+    participantsCount: 0,
+    likesCount: 0,
+    likedByCurrentUser: false
   };
 
   @Output() eventAdded = new EventEmitter<IEvent>();
@@ -34,7 +26,7 @@ export class AddEventModalComponent {
   constructor(public activeModal: NgbActiveModal) {}
 
   save() {
-    this.eventAdded.emit(this.newEvent);
+    this.eventAdded.emit(this.event);
     this.activeModal.close();
   }
 }

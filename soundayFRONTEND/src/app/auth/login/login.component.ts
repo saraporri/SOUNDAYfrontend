@@ -10,7 +10,7 @@ import { ILogin } from '../../models/i-login';
 })
 export class LoginComponent {
   loginData:ILogin = {
-    email: '',
+    username: '',
     password: '',
     role:""
   }

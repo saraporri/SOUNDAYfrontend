@@ -1,11 +1,8 @@
 <nav class="navbar navbar-expand-lg ">
   <div class="container-fluid px-5">
-    <a class="navbar-brand" href="#"
-       >
-
-       <img class="logo" src="https://res.cloudinary.com/dggqbfush/image/upload/v1720275085/7_n7xwuj.png" alt="logo">
-
-       </a>
+    <a class="navbar-brand" href="#">
+      <img class="logo" src="https://res.cloudinary.com/dggqbfush/image/upload/v1720275085/7_n7xwuj.png" alt="logo">
+    </a>
     <button
       class="navbar-toggler"
       type="button"
@@ -21,59 +18,35 @@
       id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
-          <a
-            class="nav-link text-white"
-            aria-current="page"
-            href="#"
-            >Home</a
-          >
+          <a class="nav-link text-white" aria-current="page" href="#">Home</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" [routerLink]="['/events']" href="#">Events</a>
-        </li> <li class="nav-item">
-        <a class="nav-link text-white" [routerLink]="['/show-artists']">Our Artists</a>
-      </li>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" [routerLink]="['/show-artists']">Our Artists</a>
+        </li>
         <li class="nav-item">
           <a class="nav-link text-white" [routerLink]="['/user']" href="#">Fan Profile</a>
-        </li><li class="nav-item">
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-white" [routerLink]="['/artist']" href="#">Artist Profile</a>
         </li>
-
       </ul>
       <div class="d-flex list-unstyled">
         <li class="nav-item mx-3" *ngIf="userLogged">
-          <a
-            class="nav-link text-white me-3"
-            [routerLink]="['/profile']"
-            routerLinkActive="active"
-            >Profilo</a
-          >
+          <a class="nav-link text-white me-3" [routerLink]="['/profile']" routerLinkActive="active">Profile</a>
         </li>
         <li class="nav-item" *ngIf="userLogged">
-          <button class="btn btn-outline-danger" (click)="logout()">
-            Logout
-          </button>
+          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
         </li>
-
         <li class="nav-item mx-3" *ngIf="!userLogged">
-          <a
-            class="nav-link text-white "
-            [routerLink]="['/login']"
-            routerLinkActive="active"
-            >Login</a
-          >
+          <a class="nav-link text-white" [routerLink]="['/login']" routerLinkActive="active">Login</a>
         </li>
         <li class="nav-item ml-3" *ngIf="!userLogged">
-          <a
-            class="nav-link text-white"
-            [routerLink]="['/register']"
-            routerLinkActive="active"
-            >Register</a
-          >
+          <a class="nav-link text-white" [routerLink]="['/register']" routerLinkActive="active">Register</a>
         </li>
       </div>
-
-  </div>
     </div>
-
+  </div>
 </nav>

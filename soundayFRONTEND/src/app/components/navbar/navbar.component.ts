@@ -5,18 +5,23 @@ import { IUser } from '../../models/i-user';
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.scss'
+  styleUrls: ['./navbar.component.scss'] // Correzione del percorso di styleUrls
 })
 export class NavbarComponent implements OnInit {
   userLogged!: IUser | null;
-authService: any;
 
   constructor(private authSrv: AuthService) {}
 
   ngOnInit(): void {
     this.authSrv.restore();
-    this.authSrv.user$.subscribe((_user) => {
-      this.userLogged = _user;
+    this.authSrv.user$.subscribe({
+      next: (user: IUser | null) => {
+        this.userLogged = user;
+      },
+      error: (err: any) => { // Specifica il tipo 'any' per il parametro 'err'
+        console.error('Error fetching user:', err);
+        this.userLogged = null;
+      }
     });
   }
 

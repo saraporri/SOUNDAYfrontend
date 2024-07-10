@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IEvent } from '../../models/i-event';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
+import { IUser } from '../../models/i-user';
 
 @Component({
   selector: 'app-user',
@@ -10,52 +11,54 @@ import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-mod
 })
 
 export class UserComponent {
+  selectedRole: string = '';
+
   searchQuery: string = '';
   event: IEvent = {
-    id:"",
-    tourName: 'Example Tour',
-    tourPic: 'tour-pic.jpg',
-    eventDate: '2024-07-04',
-    eventTime: '19:00',
-    city: 'Example City',
-    region: 'Example Region',
-    country: 'Example Country',
-    venue: {
-      venueName: 'Example Venue',
-      venueStreet: 'Example Street',
-      venueZip: '12345',
-      venueCity: 'Example City',
-      venueCountry: 'Example Country'
-    },
-    likeCount: 0,
-    likedByCurrentUser: false,
-    attendedCount:0
+    id: 0,
+    title: "",
+    dateTime: new Date('2024-07-15T19:00:00'),
+    eventDate: new Date('2024-07-15'),
+    location: "",
+   city:"",
+
+    participantsCount: 0,
+    likesCount: 0,
+    likedByCurrentUser: false
   };
-  user = {
-    username: 'johnDoe',
-    email: 'john@example.com',
+  registerData: IUser = {
+    id: 0,
+    username: '',
+    email: '',
     password: '',
-    name: 'John',
-    lastName: 'Doe',
-    avatar: 'https://example.com/avatar.jpg'
+    firstName: '',
+    lastName: '',
+    roles: '',
+    followersCount: 0,
+    likeEvents: 0,
+    likeArtists: 0,
+    events: [],
+    partecipation: 0
   };
+  user: any;
 
 
   toggleLike(event: IEvent) {
     event.likedByCurrentUser = !event.likedByCurrentUser;
     if (event.likedByCurrentUser) {
-      event.likeCount++;
+      event.likesCount++;
       // Aggiungi qui la logica per inviare l'aggiornamento del like al backend se necessario
     } else {
-      event.likeCount--;
+      event.likesCount--;
       // Aggiungi qui la logica per rimuovere il like dal backend se necessario
     }
     // Puoi anche emettere un evento o eseguire altre azioni dopo il toggle del like
-  }   incrementAttended(eventId: string) {
+  }
+  incrementAttended(eventId: number) {
     if (this.event.id === eventId) {
-      this.event.attendedCount++;
-      // Aggiungi qui la logica per salvare l'aggiornamento di attendedCount nel backend se necessario
-      console.log(`Attended count for event ${eventId} incremented.`);
+      this.event.participantsCount++;
+      // Aggiungi qui la logica per salvare l'aggiornamento di participantsCount nel backend se necessario
+      console.log(`Participants count for event ${eventId} incremented.`);
     }
   }
 

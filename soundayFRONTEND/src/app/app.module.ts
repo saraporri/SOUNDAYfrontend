@@ -1,30 +1,35 @@
-import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { NavbarComponent } from './components/navbar/navbar.component';
-import { FooterComponent } from './components/footer/footer.component';
-import { HttpClientModule } from '@angular/common/http';
-import { LandingPageModule } from './pages/landing-page/landing-page.module';
 import { AuthModule } from './auth/auth.module';
-import { AuthRoutingModule } from './auth/auth-routing.module';
-import { ArtistModule } from './pages/artist/artist.module';
+import { JwtModule } from '@auth0/angular-jwt';
+import { FooterComponent } from './components/footer/footer.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+
+export function tokenGetter() {
+  return localStorage.getItem('token');
+}
 
 @NgModule({
   declarations: [
-    AppComponent,
-    NavbarComponent,
+    AppComponent,  NavbarComponent,
     FooterComponent,
-
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule,HttpClientModule,
-    NgbModule,LandingPageModule,AuthRoutingModule,ArtistModule,
+    AppRoutingModule,
+    AuthModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:4200'], // Aggiorna con il tuo dominio
+        disallowedRoutes: ['http://localhost:4200/auth/']
+      }
+    })
   ],
-  providers: [],
+  providers: [],  schemas: [CUSTOM_ELEMENTS_SCHEMA],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

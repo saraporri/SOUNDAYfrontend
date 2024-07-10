@@ -18,7 +18,7 @@
 <div class="card">
     <h5 class="card-title">{{ event.city }}</h5>
       <li class="list-group-item">{{ event.eventDate | date }} </li>
-      <li class="list-group-item">{{ event.tourName }}</li>
+      <li class="list-group-item">{{ event.title }}</li>
       <!-- Aggiungi qui il numero di like se disponibile -->
       <button class="btn btn-primary" (click)="editEvent()">Edit</button>
 </div>

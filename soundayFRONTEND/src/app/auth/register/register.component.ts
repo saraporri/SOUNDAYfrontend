@@ -1,38 +1,68 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AuthService } from '../authservice.service';
 import { Router } from '@angular/router';
 import { IUser } from '../../models/i-user';
-import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss']
+  styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+  @Output() closeModal = new EventEmitter<void>();
+
   selectedRole: string = '';
-  registerData: Partial<IUser> = {
-    username: "",
-    password: "",
-    name: "",
-    lastName: "",
-    email: "",
-    role: ""
+  registerData: IUser = {
+    username: '',
+    email: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    roles: '',
+    id: 0,
+    followersCount: 0,
+    likeEvents: 0,
+    likeArtists: 0,
+    events: [],
+    partecipation: 0
   };
 
-  constructor(
-    private authSvc: AuthService,
-    private router: Router
-  ) {}
+  errorMessage: string = '';
 
-  signUp() {
-    this.registerData.role = this.selectedRole;
-    this.authSvc.register(this.registerData)
-      .subscribe(data => {
-        this.router.navigate(['/login']);
-      });
+  constructor(private authService: AuthService, private router: Router) {}
+
+  onRoleChange(event: any): void {
+    this.selectedRole = event.target.value;
+    this.registerData.roles = this.selectedRole;
   }
 
-  onRoleChange(event: any) {
-    this.selectedRole = event.target.value;
+  signUp(): void {
+    if (this.selectedRole === 'fan') {
+      this.authService.registerUser(this.registerData).subscribe(
+        (response) => {
+          this.authService.setToken(response.token);
+          this.authService.setUser(response.user);
+          this.router.navigate(['/user']);
+          this.closeModal.emit();
+        },
+        (error) => {
+          this.errorMessage = 'Registration failed. Please try again.';
+          console.error(error);
+        }
+      );
+    } else if (this.selectedRole === 'artist') {
+      this.authService.registerArtist(this.registerData).subscribe(
+        (response) => {
+          this.authService.setToken(response.token);
+          this.authService.setUser(response.user);
+          this.router.navigate(['/artist']);
+          this.closeModal.emit();
+        },
+        (error) => {
+          this.errorMessage = 'Registration failed. Please try again.';
+          console.error(error);
+        }
+      );
+    }
   }
 }
