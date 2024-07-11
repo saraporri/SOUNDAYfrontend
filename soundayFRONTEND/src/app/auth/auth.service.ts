@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject } from 'rxjs';
+import { Observable, BehaviorSubject, tap } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ILogin } from '../models/i-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -30,9 +30,14 @@ export class AuthService {
   }
 
   login(credentials: ILogin): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/users/login`, credentials);
+    return this.http.post<any>(`${this.apiUrl}/users/login`, credentials).pipe(
+      tap(response => {
+        this.setToken(response.token);
+        this.setUser(response.user);
+        this.authSubject.next(response.user);
+      })
+    );
   }
-
   isAuthenticated(): boolean {
     const token = this.getToken();
     return token ? !this.jwtHelper.isTokenExpired(token) : false;

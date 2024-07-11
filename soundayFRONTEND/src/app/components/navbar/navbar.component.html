@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg ">
+<nav class="navbar navbar-expand-lg">
   <div class="container-fluid px-5">
     <a class="navbar-brand" href="#">
       <img class="logo" src="https://res.cloudinary.com/dggqbfush/image/upload/v1720275085/7_n7xwuj.png" alt="logo">
@@ -13,9 +13,7 @@
       aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div
-      class="collapse navbar-collapse justify-content-between"
-      id="navbarSupportedContent">
+    <div class="collapse navbar-collapse justify-content-between" id="navbarSupportedContent">
       <ul class="navbar-nav">
         <li class="nav-item">
           <a class="nav-link text-white" aria-current="page" href="#">Home</a>
@@ -34,17 +32,14 @@
         </li>
       </ul>
       <div class="d-flex list-unstyled">
-        <li class="nav-item mx-3" *ngIf="userLogged">
-          <a class="nav-link text-white me-3" [routerLink]="['/profile']" routerLinkActive="active">Profile</a>
-        </li>
-        <li class="nav-item" *ngIf="userLogged">
-          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
-        </li>
-        <li class="nav-item mx-3" *ngIf="!userLogged">
+        <li class="nav-item mx-3" *ngIf="!user">
           <a class="nav-link text-white" [routerLink]="['/login']" routerLinkActive="active">Login</a>
         </li>
-        <li class="nav-item ml-3" *ngIf="!userLogged">
+        <li class="nav-item ml-3" *ngIf="!user">
           <a class="nav-link text-white" [routerLink]="['/register']" routerLinkActive="active">Register</a>
+        </li>
+        <li class="nav-item" *ngIf="user">
+          <button class="btn btn-outline-danger" (click)="logout()">Logout</button>
         </li>
       </div>
     </div>
