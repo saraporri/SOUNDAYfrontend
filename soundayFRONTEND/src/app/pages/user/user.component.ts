@@ -1,30 +1,30 @@
-import { Component } from '@angular/core';
-import { IEvent } from '../../models/i-event';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
+import { IEvent } from '../../models/i-event';
 import { IUser } from '../../models/i-user';
+import { UserService } from './user.service';
+import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrl: './user.component.scss'
+  styleUrls: ['./user.component.scss']
 })
-
-export class UserComponent {
+export class UserComponent implements OnInit {
+  events: IEvent[] = [];
   selectedRole: string = '';
-
   searchQuery: string = '';
   event: IEvent = {
     id: 0,
-    title: "",
+    title: '',
     dateTime: new Date('2024-07-15T19:00:00'),
     eventDate: new Date('2024-07-15'),
-    location: "",
-   city:"",
-
+    location: '',
+    city: '',
     participantsCount: 0,
     likesCount: 0,
-    likedByCurrentUser: false
+    likedByCurrentUser: false,
+    artistId: 0
   };
   registerData: IUser = {
     id: 0,
@@ -35,39 +35,46 @@ export class UserComponent {
     lastName: '',
     roles: '',
     followersCount: 0,
-    likeEvents: 0,
+    likeEvents: [],
     likeArtists: 0,
     events: [],
     partecipation: 0
   };
   user: any;
 
+  constructor(private modalService: NgbModal, private userService: UserService) {}
 
-  toggleLike(event: IEvent) {
+  ngOnInit(): void {
+    this.loadEvents();
+  }
+
+  loadEvents(): void {
+    this.userService.getEvents().subscribe((events: IEvent[]) => {
+      this.events = events;
+    });
+  }
+
+  toggleLike(event: IEvent): void {
     event.likedByCurrentUser = !event.likedByCurrentUser;
     if (event.likedByCurrentUser) {
       event.likesCount++;
-      // Aggiungi qui la logica per inviare l'aggiornamento del like al backend se necessario
     } else {
       event.likesCount--;
-      // Aggiungi qui la logica per rimuovere il like dal backend se necessario
     }
-    // Puoi anche emettere un evento o eseguire altre azioni dopo il toggle del like
   }
-  incrementAttended(eventId: number) {
+
+  incrementAttended(eventId: number): void {
     if (this.event.id === eventId) {
       this.event.participantsCount++;
-      // Aggiungi qui la logica per salvare l'aggiornamento di participantsCount nel backend se necessario
       console.log(`Participants count for event ${eventId} incremented.`);
     }
   }
 
-  onSearch() {
+  onSearch(): void {
     console.log(this.searchQuery); // Qui puoi gestire la logica di ricerca
   }
-  constructor(private modalService: NgbModal) {}
 
-  editProfile() {
+  editProfile(): void {
     const modalRef = this.modalService.open(EditProfileModalComponent);
     modalRef.componentInstance.user = { ...this.user };
 

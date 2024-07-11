@@ -15,7 +15,7 @@ export interface IUser {
 
   followersCount: number;
 
-  likeEvents: number;
+  likeEvents: number[];
 
   likeArtists: number;
 

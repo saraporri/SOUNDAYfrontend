@@ -1,18 +1,19 @@
 <div class="container my-5">
-  <div>
-    <div class="card ">
-        <h5 class="card-title">ARTIST NAME</h5>
-        <li class="list-group-item">ARTIST IMG</li>
-        <div class="gradient-line"></div>
+  <div *ngFor="let event of events">
+    <div class="card">
+      <h5 class="card-title">{{ event.artistName }}</h5>
+      <li class="list-group-item">
+      </li>
+      <div class="gradient-line"></div>
 
-             <li class="list-group-item">TOUR TITLE</li>
+      <li class="list-group-item">{{ event.title }}</li>
+      <li class="list-group-item">{{ event.city }}</li>
+      <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
+      <div class="gradient-line"></div>
 
-        <li class="list-group-item">CITY</li>
-
-        <li class="list-group-item">date</li>
-        <div class="gradient-line"></div>
-
-           <button>LIKE EVENT (if logged)</button>
-
+      <button *ngIf="isLoggedIn" (click)="toggleLike(event)">
+        {{ event.likedByCurrentUser ? 'UNLIKE EVENT' : 'LIKE EVENT' }}
+      </button>
     </div>
+  </div>
 </div>

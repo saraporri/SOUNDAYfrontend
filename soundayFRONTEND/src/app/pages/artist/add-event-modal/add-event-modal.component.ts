@@ -14,12 +14,13 @@ export class AddEventModalComponent {
     dateTime: new Date('2024-07-15T19:00:00'),
     eventDate: new Date('2024-07-15'),
     location: "",
-   city:"",
-
+    city: "",
     participantsCount: 0,
     likesCount: 0,
-    likedByCurrentUser: false
+    likedByCurrentUser: false,
+    artistId: 0  
   };
+
 
   @Output() eventAdded = new EventEmitter<IEvent>();
 
