@@ -1,53 +1,35 @@
-
 <div class="background">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="toptitle">WELCOME BACK, {{user?.username}}!</h1>
+    <button (click)="editProfile()" class="btn-top-right mt-5">Edit Your Profile</button>
+  </div>
 
-<div class=" d-flex justify-content-between align-items-center"><h1 class="toptitle">WELCOME BACK, FAN!</h1><button  (click)="editProfile()" class=" btn-top-right mt-5">Edit Your Profile</button></div>
-
-<div class="search-bar-position">
-<div class="search-bar">
-  <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search for concerts, artists or cities..." class="ui-input">
-
-  <div class="ui-input-underline"></div>
-  <div class="ui-input-highlight"></div>
-  <div class="ui-input-icon">
-    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-      <path
-        stroke-linejoin="round"
-        stroke-linecap="round"
-        stroke-width="2"
-        stroke="currentColor"
-        d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"
-      ></path>
-    </svg>
-  </div></div>
+  <div class="search-bar-position">
+    <div class="search-bar">
+      <input type="text" [(ngModel)]="searchQuery" (input)="onSearch()" placeholder="Search for concerts, artists or cities..." class="ui-input">
+      <div class="ui-input-underline"></div>
+      <div class="ui-input-highlight"></div>
+      <div class="ui-input-icon">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+          <path stroke-linejoin="round" stroke-linecap="round" stroke-width="2" stroke="currentColor" d="M21 21L16.65 16.65M19 11C19 15.4183 15.4183 19 11 19C6.58172 19 3 15.4183 3 11C3 6.58172 6.58172 3 11 3C15.4183 3 19 6.58172 19 11Z"></path>
+        </svg>
+      </div>
+    </div>
+  </div>
 </div>
-
-</div>
-
-
-
-
-
-
 
 <div class="container my-5">
-<div>
-  <p>Your upcoming events</p>
-  <div class="card ">
-      <h5 class="card-title">ARTIST</h5>    <p class="card-text">Tour name</p>
+  <div>
+    <p>Your upcoming events</p>
+    <div class="card" *ngFor="let event of events">
+      <h5 class="card-title">{{ event.artist?.username }}</h5>
+      <li class="list-group-item">
+      </li>
       <div class="gradient-line"></div>
-      <li class="list-group-item">City</li>
-
-      <li class="list-group-item">date</li>
-      <li class="list-group-item">venue</li>
+      <li class="list-group-item">{{ event.title }}</li>
+      <li class="list-group-item">{{ event.city }}</li>
+      <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <div class="gradient-line"></div>
-
-
-
-
-
-
-
       <li class="list-group-item">
         <div class="con-like">
           <input class="like" type="checkbox" title="like" [checked]="event.likedByCurrentUser" (change)="toggleLike(event)">
@@ -70,74 +52,31 @@
         </div>   {{ event.likesCount }}
       </li>
 
+      <div class="card-body2">
+        <li class="list-group-item">
+          <button class="btn" (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
+          {{ event.participantsCount }} Attended
+        </li>
+      </div>
+    </div>
+  </div>
 
-
-
-
-
-
-
-
-
-
-
-    <div class="card-body2">
-      <li class="list-group-item">
-        <button class="btn " (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
-        {{ event.participantsCount }} Attended
-      </li>    </div></div>
-  </div>  <div class="gradient-line my-5"></div>
-
+  <div class="gradient-line my-5"></div>
 
   <div>
     <p>You were there!</p>
-    <div class="card ">
-      <h5 class="card-title">ARTIST</h5>    <p class="card-text">Tour name</p>
+    <div class="card" *ngFor="let event of pastEvents">
+      <h5 class="card-title">{{ event.artist?.username }}</h5>
+      <p class="card-text">{{ event.title }}</p>
       <div class="gradient-line"></div>
-
-      <li class="list-group-item">date</li>
+      <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <div class="gradient-line"></div>
-
-
-
-
-
-    <div class="card-body2">
-      <li class="list-group-item">
-        {{ event.participantsCount }} Attended
-      </li>    </div></div>
-    <div class="gradient-line my-5"></div>
-    <div>
-  <p>Your favourite artists events</p>
-  <div class="card ">
-      <h5 class="card-title">ARTIST</h5>
-     <li class="list-group-item">TOUR TITLE</li>
-     <div class="gradient-line"></div>
-
-      <li class="list-group-item">city</li>
-      <li class="list-group-item">date</li>
-      <div class="gradient-line"></div>
-
-        <li class="list-group-item">likes</li>
-
-        <div class="con-like">
-          <input class="like" type="checkbox" title="like" [checked]="event.likedByCurrentUser" (change)="toggleLike(event)">
-          <div class="checkmark">
-            <svg xmlns="http://www.w3.org/2000/svg" class="outline" viewBox="0 0 24 24">
-              <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Zm-3.585,18.4a2.973,2.973,0,0,1-3.83,0C4.947,16.006,2,11.87,2,8.967a4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,11,8.967a1,1,0,0,0,2,0,4.8,4.8,0,0,1,4.5-5.05A4.8,4.8,0,0,1,22,8.967C22,11.87,19.053,16.006,13.915,20.313Z"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" class="filled" viewBox="0 0 24 24">
-              <path d="M17.5,1.917a6.4,6.4,0,0,0-5.5,3.3,6.4,6.4,0,0,0-5.5-3.3A6.8,6.8,0,0,0,0,8.967c0,4.547,4.786,9.513,8.8,12.88a4.974,4.974,0,0,0,6.4,0C19.214,18.48,24,13.514,24,8.967A6.8,6.8,0,0,0,17.5,1.917Z"></path>
-            </svg>
-            <svg xmlns="http://www.w3.org/2000/svg" height="100" width="100" class="celebrate">
-              <polygon class="poly" points="10,10 20,20"></polygon>
-              <polygon class="poly" points="10,50 20,50"></polygon>
-              <polygon class="poly" points="20,80 30,70"></polygon>
-              <polygon class="poly" points="90,10 80,20"></polygon>
-              <polygon class="poly" points="90,50 80,50"></polygon>
-              <polygon class="poly" points="80,80 70,70"></polygon>
-            </svg>
-          </div>
-        </div>   {{ event.likesCount }}
+      <div class="card-body2">
+        <li class="list-group-item">
+          {{ event.participantsCount }} Attended
+        </li>
+      </div>
+    </div>
   </div>
 </div>
+

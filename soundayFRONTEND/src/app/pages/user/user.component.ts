@@ -1,9 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { combineLatest } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 import { IEvent } from '../../models/i-event';
 import { IUser } from '../../models/i-user';
-import { UserService } from './user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
+import { EventService } from '../events/events.service';
 
 @Component({
   selector: 'app-user',
@@ -12,65 +14,44 @@ import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-mod
 })
 export class UserComponent implements OnInit {
   events: IEvent[] = [];
-  selectedRole: string = '';
+  pastEvents: IEvent[] = [];
+  user: IUser | null = null;
   searchQuery: string = '';
-  event: IEvent = {
-    id: 0,
-    title: '',
-    dateTime: new Date('2024-07-15T19:00:00'),
-    eventDate: new Date('2024-07-15'),
-    location: '',
-    city: '',
-    participantsCount: 0,
-    likesCount: 0,
-    likedByCurrentUser: false,
-  };
-  registerData: IUser = {
-    id: 0,
-    username: '',
-    email: '',
-    password: '',
-    firstName: '',
-    lastName: '',
-    roles: '',
-    followersCount: 0,
-    likeEvents: [],
-    likeArtists: 0,
-    events: [],
-    partecipation: 0
-  };
-  user: any;
 
-  constructor(private modalService: NgbModal, private userService: UserService) {}
+  constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadEvents();
+    this.authService.user$.subscribe(user => {
+      this.user = user;
+    });
   }
 
-  loadEvents(): void {
-    this.userService.getEvents().subscribe((events: IEvent[]) => {
+  loadEvents() {
+    this.eventService.getAll().subscribe(events => {
+      const today = new Date();
       this.events = events;
+      this.pastEvents = events.filter(event => new Date(event.eventDate) < today);
     });
   }
 
   toggleLike(event: IEvent): void {
-    event.likedByCurrentUser = !event.likedByCurrentUser;
-    if (event.likedByCurrentUser) {
-      event.likesCount++;
-    } else {
-      event.likesCount--;
-    }
+    this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
+      event.likedByCurrentUser = !event.likedByCurrentUser;
+      event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
+    });
   }
 
   incrementAttended(eventId: number): void {
-    if (this.event.id === eventId) {
-      this.event.participantsCount++;
-      console.log(`Participants count for event ${eventId} incremented.`);
+    const event = this.events.find(e => e.id === eventId);
+    if (event) {
+      event.participantsCount++;
+      // Add logic to update the participants count in the backend if necessary
     }
   }
 
   onSearch(): void {
-    console.log(this.searchQuery); // Qui puoi gestire la logica di ricerca
+    console.log(this.searchQuery); // Handle the search logic here
   }
 
   editProfile(): void {
