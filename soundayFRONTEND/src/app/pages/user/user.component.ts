@@ -24,7 +24,6 @@ export class UserComponent implements OnInit {
     participantsCount: 0,
     likesCount: 0,
     likedByCurrentUser: false,
-    artistId: 0
   };
   registerData: IUser = {
     id: 0,

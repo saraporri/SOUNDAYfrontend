@@ -3,6 +3,7 @@ import { combineLatest } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { IEvent } from '../../models/i-event';
 import { EventService } from './events.service';
+import { IUser } from '../../models/i-user';
 
 @Component({
   selector: 'app-events',
@@ -30,7 +31,7 @@ export class EventsComponent implements OnInit {
       this.isLoggedIn = !!user;
 
       if (user) {
-        const likedEventIds: number[] = user.likeEvents || []; // Explicitly type as number[]
+        const likedEventIds: number[] = user.likeEvents || [];
         this.events.forEach(event => {
           event.likedByCurrentUser = likedEventIds.includes(event.id);
         });

@@ -18,7 +18,6 @@ export class AddEventModalComponent {
     participantsCount: 0,
     likesCount: 0,
     likedByCurrentUser: false,
-    artistId: 0  
   };
 
 

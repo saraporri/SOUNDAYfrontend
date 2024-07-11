@@ -1,3 +1,5 @@
+import { IUser } from "./i-user";
+
 export interface IEvent {
   likedByCurrentUser: boolean;
   id: number;
@@ -10,7 +12,5 @@ export interface IEvent {
 city:string;
   participantsCount: number;
   likesCount: number;
-  artistName?: string;
-  artistId: number; // Aggiungi questa proprietà
-
+  artist?:IUser
 }

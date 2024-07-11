@@ -1,7 +1,7 @@
 <div class="container my-5">
-  <div *ngFor="let event of events">
+  <div *ngFor="let event of events" >
     <div class="card">
-      <h5 class="card-title">{{ event.artistName }}</h5>
+      <h5 class="card-title">{{ event.artist?.username }}</h5>
       <li class="list-group-item">
       </li>
       <div class="gradient-line"></div>
