@@ -58,16 +58,24 @@ export class AuthService {
     }
     return null;
   }
-
   restoreUser(): void {
     const userJson = localStorage.getItem('user');
     if (!userJson) return;
 
-    const user = JSON.parse(userJson);
-    if (!this.jwtHelper.isTokenExpired(this.getToken() || '')) {
-      this.authSubject.next(user);
-      this.autoLogout(this.getToken() || '');
+    try {
+      const user = JSON.parse(userJson);
+      const token = this.getToken();
+      if (token && !this.jwtHelper.isTokenExpired(token)) {
+        this.authSubject.next(user);
+        this.autoLogout(token);
+      }
+    } catch (e) {
+      console.error('Error parsing user data from localStorage', e);
     }
+  }
+
+  restore(): void {
+    this.restoreUser();
   }
 
   autoLogout(token: string): void {
