@@ -13,9 +13,11 @@ export class EventService {
   private apiUrl = `${environment.apiUrl}/events`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
-
   getAll(): Observable<IEvent[]> {
-    return this.http.get<IEvent[]>(this.apiUrl);
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${this.authService.getToken()}`,
+    });
+    return this.http.get<IEvent[]>(this.apiUrl, { headers });
   }
 
   getArtistById(artistId: number): Observable<IUser> {

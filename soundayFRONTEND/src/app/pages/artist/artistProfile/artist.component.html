@@ -1,56 +1,51 @@
 <div class="background">
+  <div class="d-flex justify-content-between align-items-center">
+    <h1 class="toptitle">WELCOME BACK, {{ artist?.username }}!</h1>
+    <button class="btn-top-right mt-5" (click)="updateArtistImage()">Update Artist Image</button>
+  </div>
 
-<div class="  d-flex justify-content-between align-items-center"><h1 class="toptitle">WELCOME BACK, ARTIST!</h1><button class="btn-top-right mt-5" onclick="updateArtistImage()">Update Artist Image</button></div>
-
-
-<div class="btn-new-event-position">
-<button  (click)="openAddEventModal()" class="btn-add-event"><div class="sign">+</div>
-
-  <div class="text">AddEvent</div></button></div></div>
-
-
-
-
-
+  <div class="btn-new-event-position">
+    <button (click)="openAddEventModal()" class="btn-add-event">
+      <div class="sign">+</div>
+      <div class="text">Add Event</div>
+    </button>
+  </div>
+</div>
 
 <div class="container my-5">
-<p>Your events</p>
-<div class="card">
-    <h5 class="card-title">{{ event.city }}</h5>
-      <li class="list-group-item">{{ event.eventDate | date }} </li>
+  <p>Your events</p>
+  <div *ngFor="let event of currentEvents">
+    <div class="card">
+      <h5 class="card-title">{{ event.city }}</h5>
+      <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.title }}</li>
-      <!-- Aggiungi qui il numero di like se disponibile -->
-      <button class="btn btn-primary" (click)="editEvent()">Edit</button>
+      <li class="list-group-item">{{ event.likesCount }} Likes</li>
+      <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
+    </div>
+  </div>
 </div>
-
-
-
 
 <div class="gradient-line my-5"></div>
 
-<div>
-<p>Past events</p>
-<div class="card ">
-    <h5 class="card-title">CITY</h5>
-    <div class="gradient-line"></div>
-
-    <li class="list-group-item">date</li>
-    <li class="list-group-item">TOUR TITLE</li>
-    <div class="gradient-line"></div>
-
-     <li class="list-group-item">3445 attended</li>
-
+<div class="container my-5">
+  <p>Past events</p>
+  <div *ngFor="let event of pastEvents">
+    <div class="card">
+      <h5 class="card-title">{{ event.city }}</h5>
+      <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
+      <li class="list-group-item">{{ event.title }}</li>
+      <li class="list-group-item">{{ event.participantsCount }} Attended</li>
+    </div>
+  </div>
 </div>
 
-</div>
 <div class="gradient-line my-5"></div>
-<div>
-<p>Your best fans</p>
-<div class="card ">
+
+<div class="container my-5">
+  <p>Your best fans</p>
+  <div class="card">
     <h5 class="card-title">FANGIRL</h5>
     <div class="gradient-line"></div>
-
     <li class="list-group-item">attended 45 concerts</li>
-
-
-</div></div>
+  </div>
+</div>
