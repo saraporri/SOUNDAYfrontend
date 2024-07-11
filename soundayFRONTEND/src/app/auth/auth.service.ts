@@ -1,33 +1,30 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { IUser } from '../models/i-user';
 import { ILogin } from '../models/i-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
+import { Iregister } from '../models/iregister';
+import { IUser } from '../models/i-user';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  restore() {
-    throw new Error('Method not implemented.');
-  }
   private apiUrl = `${environment.apiUrl}`;
-  private jwtHelper: JwtHelperService;
-  authSubject: any;
-  user$: any;
+  private jwtHelper: JwtHelperService = new JwtHelperService();
+  private authSubject = new BehaviorSubject<IUser | null>(null);
+  public user$ = this.authSubject.asObservable();
 
   constructor(private http: HttpClient) {
-    this.jwtHelper = new JwtHelperService();
     this.restoreUser();
   }
 
-  registerUser(user: IUser): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/register/users`, user);
+  registerUser(user: Iregister): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/users/register`, user);
   }
 
-  registerArtist(artist: IUser): Observable<any> {
+  registerArtist(artist: Iregister): Observable<any> {
     artist.roles = 'artist';
     return this.http.post<any>(`${this.apiUrl}/users/registerArtist`, artist);
   }
@@ -51,6 +48,7 @@ export class AuthService {
 
   setUser(user: IUser): void {
     localStorage.setItem('user', JSON.stringify(user));
+    this.authSubject.next(user);
   }
 
   getUser(): IUser | null {
@@ -62,14 +60,14 @@ export class AuthService {
   }
 
   restoreUser(): void {
-    const userJson = localStorage.getItem('accessData');
+    const userJson = localStorage.getItem('user');
     if (!userJson) return;
 
-    const accessData = JSON.parse(userJson);
-    if (this.jwtHelper.isTokenExpired(accessData.token)) return;
-
-    this.authSubject.next(accessData.user);
-    this.autoLogout(accessData.token);
+    const user = JSON.parse(userJson);
+    if (!this.jwtHelper.isTokenExpired(this.getToken() || '')) {
+      this.authSubject.next(user);
+      this.autoLogout(this.getToken() || '');
+    }
   }
 
   autoLogout(token: string): void {

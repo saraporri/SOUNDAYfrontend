@@ -1,66 +1,80 @@
-import { Component, EventEmitter, Output } from '@angular/core';
-import { AuthService } from '../authservice.service';
+import { Component } from '@angular/core';
 import { Router } from '@angular/router';
-import { IUser } from '../../models/i-user';
+import { AuthService } from '../auth.service';
+import { Iregister } from '../../models/iregister';
+import { Artist } from '../../models/Iartist';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
-  styleUrls: ['./register.component.scss'],
+  styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent {
-  @Output() closeModal = new EventEmitter<void>();
-
-  selectedRole: string = '';
-  registerData: IUser = {
+  registerData: Iregister = {
     username: '',
-    email: '',
     password: '',
+    email: '',
     firstName: '',
     lastName: '',
     roles: '',
-    id: 0,
-    followersCount: 0,
-    likeEvents: 0,
-    likeArtists: 0,
-    events: [],
-    partecipation: 0
   };
 
-  errorMessage: string = '';
+  artist: Artist = {
+    username: '',
+    password: '',
+    email: '',
+    firstName: '',
+    lastName: '',
+    roles: '',
+  };
 
-  constructor(private authService: AuthService, private router: Router) {}
+  selectedRole: string = '';
 
-  onRoleChange(event: any): void {
+  constructor(
+    private authSvc: AuthService,
+    private router: Router
+  ) { }
+
+  onRoleChange(event: any) {
     this.selectedRole = event.target.value;
-    this.registerData.roles = this.selectedRole;
   }
 
-  signUp(): void {
+  signUp() {
     if (this.selectedRole === 'fan') {
-      this.authService.registerUser(this.registerData).subscribe(
+      this.authSvc.registerUser(this.registerData).subscribe(
         (response) => {
-          this.authService.setToken(response.token);
-          this.authService.setUser(response.user);
-          this.router.navigate(['/user']);
-          this.closeModal.emit();
+          if (response && response.token && response.user) {
+            this.authSvc.setToken(response.token);
+            this.authSvc.setUser(response.user);
+            this.router.navigate(['login']);
+          } else {
+            console.error('Invalid response', response);
+          }
         },
-        (error) => {
-          this.errorMessage = 'Registration failed. Please try again.';
-          console.error(error);
+        (error: any) => {
+          console.error('Registration failed', error);
         }
       );
-    } else if (this.selectedRole === 'artist') {
-      this.authService.registerArtist(this.registerData).subscribe(
+    } else {
+      // Copy user data to artist object
+      this.artist.firstName = this.registerData.firstName;
+      this.artist.lastName = this.registerData.lastName;
+      this.artist.email = this.registerData.email;
+      this.artist.password = this.registerData.password;
+      this.artist.roles = 'artist'; // Setting the role to artist
+
+      this.authSvc.registerArtist(this.artist).subscribe(
         (response) => {
-          this.authService.setToken(response.token);
-          this.authService.setUser(response.user);
-          this.router.navigate(['/artist']);
-          this.closeModal.emit();
+          if (response && response.token && response.user) {
+            this.authSvc.setToken(response.token);
+            this.authSvc.setUser(response.user);
+            this.router.navigate(['login']);
+          } else {
+            console.error('Invalid response', response);
+          }
         },
-        (error) => {
-          this.errorMessage = 'Registration failed. Please try again.';
-          console.error(error);
+        (error: any) => {
+          console.error('Registration failed', error);
         }
       );
     }
