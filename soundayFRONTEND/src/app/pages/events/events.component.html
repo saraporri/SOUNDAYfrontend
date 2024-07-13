@@ -1,6 +1,6 @@
 <div class="container my-5">
-  <div *ngFor="let event of events" >
-    <div class="card">
+  <div class="row">
+  <div *ngFor="let event of events" class="card mx-2">
       <h5 class="card-title">{{ event.artist?.username }}</h5>
       <li class="list-group-item">
       </li>
@@ -14,6 +14,5 @@
       <button *ngIf="isLoggedIn" (click)="toggleLike(event)">
         {{ event.likedByCurrentUser ? 'UNLIKE EVENT' : 'LIKE EVENT' }}
       </button>
-    </div>
-  </div>
+  </div></div>
 </div>

@@ -14,14 +14,15 @@
 
 <div class="container my-5">
   <p>Your events</p>
-  <div *ngFor="let event of currentEvents">
+  <div class="row">
+  <div *ngFor="let event of currentEvents" class="mx-2">
     <div class="card">
       <h5 class="card-title">{{ event.city }}</h5>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.title }}</li>
       <li class="list-group-item">{{ event.likesCount }} Likes</li>
       <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
-    </div>
+    </div></div>
   </div>
 </div>
 
@@ -29,13 +30,14 @@
 
 <div class="container my-5">
   <p>Past events</p>
-  <div *ngFor="let event of pastEvents">
+  <div class="row">
+  <div *ngFor="let event of pastEvents" class="mx-2">
     <div class="card">
       <h5 class="card-title">{{ event.city }}</h5>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.title }}</li>
       <li class="list-group-item">{{ event.participantsCount }} Attended</li>
-    </div>
+    </div></div>
   </div>
 </div>
 
@@ -43,9 +45,10 @@
 
 <div class="container my-5">
   <p>Your best fans</p>
-  <div class="card">
+  <div class="row">
+  <div class="card mx-2">
     <h5 class="card-title">FANGIRL</h5>
     <div class="gradient-line"></div>
     <li class="list-group-item">attended 45 concerts</li>
-  </div>
+  </div></div>
 </div>
