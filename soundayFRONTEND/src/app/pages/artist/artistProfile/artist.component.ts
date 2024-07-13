@@ -6,6 +6,8 @@ import { AddEventModalComponent } from '../add-event-modal/add-event-modal.compo
 import { IUser } from '../../../models/i-user';
 import { EventService } from '../../events/events.service';
 import { AuthService } from '../../../auth/auth.service';
+import { CountsAndLike } from '../../../models/counts-and-like';
+import { combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-artist',
@@ -13,48 +15,70 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./artist.component.scss']
 })
 export class ArtistComponent implements OnInit {
-updateArtistImage() {
-throw new Error('Method not implemented.');
-}
-  @Input() event!: IEvent; // Usa il tipo opzionale
   events: IEvent[] = [];
   pastEvents: IEvent[] = [];
-  currentEvents: IEvent[] = [];
-  artist: IUser | null = null;
+  user: IUser | null = null;
+  eventCounts: { [key: number]: CountsAndLike } = {};
 
-  constructor(
-    private modalService: NgbModal,
-    private eventService: EventService,
-    private authService: AuthService
-  ) {}
+  constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
+    this.loadEvents();
     this.authService.user$.subscribe(user => {
-      this.artist = user;
-      this.loadEvents();
+      this.user = user;
     });
   }
 
-  loadEvents(): void {
-    if (this.artist) {
-      this.eventService.getAll().subscribe(events => {
-        const today = new Date();
-        this.events = events.filter(event => event.artist?.id === this.artist?.id);
-        this.currentEvents = this.events.filter(event => new Date(event.eventDate) >= today);
-        this.pastEvents = this.events.filter(event => new Date(event.eventDate) < today);
+  loadEvents() {
+    combineLatest([
+      this.eventService.getAll(),
+      this.authService.user$
+    ]).subscribe(([allEvents, user]) => {
+      const today = new Date();
+      this.events = allEvents;
+      this.pastEvents = allEvents.filter(event => new Date(event.eventDate) < today);
+
+      if (user) {
+        const likedEventIds: number[] = user.likeEvents || [];
+        allEvents.forEach(event => {
+          this.eventCounts[event.id] = {
+            id: event.id,
+            likedByCurrentUser: likedEventIds.includes(event.id),
+            participantsCount: 0, // Default value
+            likesCount: 0 // Default value
+          };
+        });
+      }
+    });
+  }
+
+  toggleLike(eventId: number): void {
+    const counts = this.getEventCounts(eventId);
+    if (counts) {
+      this.eventService.toggleLike(eventId, !counts.likedByCurrentUser).subscribe(() => {
+        counts.likedByCurrentUser = !counts.likedByCurrentUser;
+        counts.likedByCurrentUser ? counts.likesCount++ : counts.likesCount--;
       });
     }
   }
 
-  openAddEventModal() {
-    const modalRef = this.modalService.open(AddEventModalComponent);
-
-    modalRef.componentInstance.eventAdded.subscribe((newEvent: IEvent) => {
-      this.events.push(newEvent);
-      this.loadEvents(); // Refresh the events to re-categorize them
-    });
+  getEventCounts(eventId: number): CountsAndLike | undefined {
+    return this.eventCounts[eventId];
   }
 
+
+  openAddEventModal(): void {
+    const modalRef = this.modalService.open(AddEventModalComponent);
+    modalRef.componentInstance.user = this.user;
+
+    modalRef.result.then((result) => {
+      if (result) {
+        this.loadEvents();
+      }
+    }).catch((error) => {
+      console.log('Modal dismissed:', error);
+    });
+  }
   editEvent(event: IEvent) {
     const modalRef = this.modalService.open(EditEventModalComponent);
     modalRef.componentInstance.event = { ...event }; // Passa una copia dell'evento da modificare

@@ -34,10 +34,10 @@ export class AuthService {
       tap(response => {
         this.setToken(response.token);
         this.setUser(response.user);
-        this.authSubject.next(response.user);
       })
     );
   }
+
   isAuthenticated(): boolean {
     const token = this.getToken();
     return token ? !this.jwtHelper.isTokenExpired(token) : false;
@@ -47,13 +47,12 @@ export class AuthService {
     localStorage.setItem('token', token);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getToken(): string {
+    return localStorage.getItem('token') || '';
   }
-
   setUser(user: IUser): void {
-    localStorage.setItem('user', JSON.stringify(user));
     this.authSubject.next(user);
+    localStorage.setItem('user', JSON.stringify(user));
   }
 
   getUser(): IUser | null {
@@ -63,6 +62,7 @@ export class AuthService {
     }
     return null;
   }
+
   restoreUser(): void {
     const userJson = localStorage.getItem('user');
     if (!userJson) return;
@@ -77,10 +77,6 @@ export class AuthService {
     } catch (e) {
       console.error('Error parsing user data from localStorage', e);
     }
-  }
-
-  restore(): void {
-    this.restoreUser();
   }
 
   autoLogout(token: string): void {

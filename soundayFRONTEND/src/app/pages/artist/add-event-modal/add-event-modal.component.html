@@ -9,13 +9,20 @@
   </div>
   <div class="mb-3">
     <label for="eventDate" class="form-label">Event Date</label>
-    <input type="date" class="form-control" id="eventDate" [(ngModel)]="event.eventDate">
+    <input type="date" class="form-control" id="eventDate" [(ngModel)]="formattedEventDate">
+  </div>
+  <div class="mb-3">
+    <label for="dateTime" class="form-label">Event Time</label>
+    <input type="time" class="form-control" id="dateTime" [(ngModel)]="formattedEventTime">
   </div>
   <div class="mb-3">
     <label for="city" class="form-label">City</label>
     <input type="text" class="form-control" id="city" [(ngModel)]="event.city">
   </div>
-  <!-- Aggiungi altri campi necessari -->
+  <div class="mb-3">
+    <label for="location" class="form-label">Location</label>
+    <input type="text" class="form-control" id="location" [(ngModel)]="event.location">
+  </div>
 </div>
 <div class="modal-footer">
   <button type="button" class="btn btn-secondary" (click)="activeModal.dismiss('Cancel click')">Cancel</button>

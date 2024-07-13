@@ -13,21 +13,43 @@ export class EventService {
   private apiUrl = `${environment.apiUrl}/events`;
 
   constructor(private http: HttpClient, private authService: AuthService) {}
-  getAll(): Observable<IEvent[]> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.authService.getToken()}`,
+
+  private getAuthHeaders(): HttpHeaders {
+    const token = this.authService.getToken();
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
     });
-    return this.http.get<IEvent[]>(this.apiUrl, { headers });
+  }
+
+  getAll(): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(this.apiUrl, { headers: this.getAuthHeaders() });
   }
 
   getArtistById(artistId: number): Observable<IUser> {
-    return this.http.get<IUser>(`${environment.apiUrl}/users/${artistId}`);
+    return this.http.get<IUser>(`${environment.apiUrl}/users/${artistId}`, { headers: this.getAuthHeaders() });
   }
 
   toggleLike(eventId: number, liked: boolean): Observable<any> {
-    const headers = new HttpHeaders({
-      Authorization: `Bearer ${this.authService.getToken()}`,
-    });
-    return this.http.post<any>(`${this.apiUrl}/${eventId}/like`, { liked }, { headers });
+    return this.http.post<any>(
+      `${this.apiUrl}/${eventId}/like`,
+      { liked },
+      { headers: this.getAuthHeaders() }
+    );
+  }
+  addEvent(eventData: FormData): Observable<any> {
+    return this.http.post<any>(this.apiUrl, eventData);
+  }
+
+  getEventById(id: number): Observable<IEvent> {
+    return this.http.get<IEvent>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
+  }
+
+  updateEvent(id: number, event: IEvent): Observable<IEvent> {
+    return this.http.put<IEvent>(`${this.apiUrl}/${id}`, event, { headers: this.getAuthHeaders() });
+  }
+
+  deleteEvent(id: number): Observable<string> {
+    return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 }

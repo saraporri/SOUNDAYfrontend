@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { combineLatest } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { IEvent } from '../../models/i-event';
 import { IUser } from '../../models/i-user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { EventService } from '../events/events.service';
+import { CountsAndLike } from '../../models/counts-and-like';
 
 @Component({
   selector: 'app-user',
@@ -13,8 +13,8 @@ import { EventService } from '../events/events.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  events: IEvent[] = [];
-  pastEvents: IEvent[] = [];
+  events: (IEvent & CountsAndLike)[] = [];
+  pastEvents: (IEvent & CountsAndLike)[] = [];
   user: IUser | null = null;
   searchQuery: string = '';
 
@@ -30,12 +30,17 @@ export class UserComponent implements OnInit {
   loadEvents() {
     this.eventService.getAll().subscribe(events => {
       const today = new Date();
-      this.events = events;
-      this.pastEvents = events.filter(event => new Date(event.eventDate) < today);
+      this.events = events.map(event => ({
+        ...event,
+        likedByCurrentUser: false,
+        participantsCount: 0,
+        likesCount: 0
+      }));
+      this.pastEvents = this.events.filter(event => new Date(event.eventDate) < today);
     });
   }
 
-  toggleLike(event: IEvent): void {
+  toggleLike(event: CountsAndLike): void {
     this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
       event.likedByCurrentUser = !event.likedByCurrentUser;
       event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;

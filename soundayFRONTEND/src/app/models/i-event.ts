@@ -1,7 +1,6 @@
 import { IUser } from "./i-user";
 
 export interface IEvent {
-  likedByCurrentUser: boolean;
   id: number;
 
   title: string;
@@ -10,7 +9,6 @@ export interface IEvent {
   location: string;
   // tourPic
 city:string;
-  participantsCount: number;
-  likesCount: number;
-  artist?:IUser
+
+  artistId?:IUser
 }
