@@ -56,4 +56,5 @@ export class EventService {
   deleteEvent(id: number): Observable<string> {
     return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
+
 }

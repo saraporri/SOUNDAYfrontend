@@ -91,4 +91,16 @@ export class ArtistComponent implements OnInit {
       }
     });
   }
-}
+  deleteEvent(event: IEvent): void {
+    if (confirm(`Are you sure you want to delete the event "${event.title}"?`)) {
+      this.eventService.deleteEvent(event.id).subscribe({
+        next: (response) => {
+          console.log('Event deleted successfully:', response);
+          this.events = this.events.filter(e => e.id !== event.id);  // Rimuovi l'evento dalla lista
+        },
+        error: (error) => {
+          console.error('Error deleting event:', error);
+        }
+      });
+    }
+  }}

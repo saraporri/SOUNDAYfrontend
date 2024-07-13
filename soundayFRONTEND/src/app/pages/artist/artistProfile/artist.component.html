@@ -24,9 +24,8 @@
 
         <li class="list-group-item">{{ getEventCounts(event.id)?.likesCount }} Likes</li>
         <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
-        <button class="btn btn-secondary" (click)="toggleLike(event.id)">
-          {{ getEventCounts(event.id)?.likedByCurrentUser ? 'Unlike' : 'Like' }}
-        </button>
+        <button class="btn btn-danger" (click)="deleteEvent(event)">Delete</button>
+
       </div>
     </div>
   </div>
