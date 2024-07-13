@@ -1,6 +1,7 @@
-import { IUser } from "./i-user";
+import { IUser } from './i-user';
+import { CountsAndLike } from './counts-and-like';
 
-export interface IEvent {
+export interface IEvent extends CountsAndLike{
   id: number;
 
   title: string;

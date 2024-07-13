@@ -1,6 +1,6 @@
 <div class="background">
   <div class="d-flex justify-content-between align-items-center">
-    <h1 class="toptitle">WELCOME BACK, {{user?.username}}!</h1>
+    <h1 class="toptitle">WELCOME BACK, {{ user?.username }}!</h1>
     <button (click)="editProfile()" class="btn-top-right mt-5">Edit Your Profile</button>
   </div>
 
@@ -19,19 +19,15 @@
 </div>
 
 <div class="container my-5">
-
-    <p>Your upcoming events</p>
-    <div><div class="row">
-    <div class="card mx-2" *ngFor="let event of events">
-      <h5 class="card-title">{{ event.artistId.username }}</h5>
-      <li class="list-group-item">
-      </li>
-      <div class="gradient-line"></div>
+  <p>Your upcoming events</p>
+  <div class="row">
+    <div *ngFor="let event of events" class="card mx-2">
+      <h5 *ngIf="event.artistId" class="card-title">{{ event.artistId.username }}</h5>
       <li class="list-group-item">{{ event.title }}</li>
+      <div class="gradient-line"></div>
       <li class="list-group-item">{{ event.city }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.dateTime | date: 'shortTime' }}</li>
-
       <div class="gradient-line"></div>
       <li class="list-group-item">
         <div class="con-like">
@@ -52,9 +48,8 @@
               <polygon class="poly" points="80,80 70,70"></polygon>
             </svg>
           </div>
-        </div>   {{ event.likesCount }}
+        </div> {{ event.likesCount }}
       </li>
-
       <div class="card-body2">
         <li class="list-group-item">
           <button class="btn" (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
@@ -62,25 +57,23 @@
         </li>
       </div>
     </div>
-  </div></div>
+  </div>
+</div>
 
-  <div class="gradient-line my-5"></div>
+<div class="gradient-line my-5"></div>
 
-  <div>
-    <p>You were there!</p>
-    <div class="row">
-    <div class="card  mx-2" *ngFor="let event of pastEvents">
-      <h5 class="card-title">{{ event.artistId.username }}</h5>
+<div>
+  <p>You were there!</p>
+  <div class="row">
+    <div *ngFor="let event of pastEvents" class="card mx-2">
+      <h5 *ngIf="event.artistId" class="card-title">{{ event.artistId.username }}</h5>
       <p class="card-text">{{ event.title }}</p>
       <div class="gradient-line"></div>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <div class="gradient-line"></div>
       <div class="card-body2">
-        <li class="list-group-item">
-          {{ event.participantsCount }} Attended
-        </li>
+        <li class="list-group-item">{{ event.participantsCount }} Attended</li>
       </div>
     </div>
   </div>
-</div></div>
-
+</div>

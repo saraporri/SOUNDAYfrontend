@@ -17,34 +17,42 @@ export class UserComponent implements OnInit {
   pastEvents: (IEvent & CountsAndLike)[] = [];
   user: IUser | null = null;
   searchQuery: string = '';
+  isLoggedIn: boolean = false;
 
   constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.loadEvents();
     this.authService.user$.subscribe(user => {
       this.user = user;
+      this.isLoggedIn = !!user;
+      this.loadEvents();
     });
   }
 
-  loadEvents() {
+  loadEvents(): void {
     this.eventService.getAll().subscribe(events => {
       const today = new Date();
+      const userLikeEvents = this.user?.likeEvents || [];  // Use an empty array if user or likeEvents is undefined
       this.events = events.map(event => ({
         ...event,
-        likedByCurrentUser: false,
-        participantsCount: 0,
-        likesCount: 0
+        likedByCurrentUser: userLikeEvents.includes(event.id),
+        participantsCount: event.participantsCount || 0,
+        likesCount: event.likesCount || 0
       }));
       this.pastEvents = this.events.filter(event => new Date(event.eventDate) < today);
+      this.events = this.events.filter(event => new Date(event.eventDate) >= today);
     });
   }
 
   toggleLike(event: CountsAndLike): void {
-    this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
-      event.likedByCurrentUser = !event.likedByCurrentUser;
-      event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
-    });
+    if (this.user) {
+      this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
+        event.likedByCurrentUser = !event.likedByCurrentUser;
+        event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
+      });
+    } else {
+      console.log('User not logged in');
+    }
   }
 
   incrementAttended(eventId: number): void {
