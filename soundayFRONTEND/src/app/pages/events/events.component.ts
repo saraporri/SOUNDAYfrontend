@@ -5,6 +5,8 @@ import { IEvent } from '../../models/i-event';
 import { EventService } from './events.service';
 import { IUser } from '../../models/i-user';
 import { CountsAndLike } from '../../models/counts-and-like';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { EditEventModalComponent } from '../artist/edit-event-modal/edit-event-modal.component';
 
 @Component({
   selector: 'app-events',
@@ -15,10 +17,19 @@ export class EventsComponent implements OnInit {
   events: (IEvent & CountsAndLike)[] = [];
   isLoggedIn: boolean = false;
 
-  constructor(private eventService: EventService, private authService: AuthService) {}
+  constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.loadEvents();
+  }
+
+  editEvent(event: IEvent): void {
+    const modalRef = this.modalService.open(EditEventModalComponent);
+    modalRef.componentInstance.event = { ...event }; // Passa una copia dell'evento da modificare
+
+    modalRef.componentInstance.eventUpdated.subscribe((updatedEvent: IEvent) => {
+      this.loadEvents(); // Ricarica tutti gli eventi dopo l'aggiornamento
+    });
   }
 
   loadEvents() {

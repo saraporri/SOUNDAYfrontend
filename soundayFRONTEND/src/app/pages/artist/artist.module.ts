@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ArtistComponent } from './artistProfile/artist.component';
 import { ArtistRoutingModule } from './artist-routing.module';
@@ -16,7 +16,7 @@ import { ShowArtistsComponent } from './show-artists/show-artists.component';
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule,
+    NgbModule,ReactiveFormsModule,
     ArtistRoutingModule,
   ]
 })

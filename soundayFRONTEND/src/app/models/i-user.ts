@@ -22,5 +22,4 @@ export interface IUser {
   events: string[];
 
   partecipation: number;
-  token?: string;
 }

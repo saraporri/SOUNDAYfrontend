@@ -9,11 +9,11 @@
   </div>
   <div class="mb-3">
     <label for="eventDate" class="form-label">Event Date</label>
-    <input type="date" class="form-control" id="eventDate" [(ngModel)]="formattedEventDate">
+    <input type="date" class="form-control" id="eventDate" [(ngModel)]="event.eventDate">
   </div>
   <div class="mb-3">
     <label for="dateTime" class="form-label">Event Time</label>
-    <input type="time" class="form-control" id="dateTime" [(ngModel)]="formattedEventTime">
+    <input type="time" class="form-control" id="dateTime" [(ngModel)]="event.dateTime">
   </div>
   <div class="mb-3">
     <label for="city" class="form-label">City</label>
@@ -22,6 +22,10 @@
   <div class="mb-3">
     <label for="location" class="form-label">Location</label>
     <input type="text" class="form-control" id="location" [(ngModel)]="event.location">
+  </div>
+  <div class="mb-3">
+    <label for="artistId" class="form-label">Artist id</label>
+    <input type="text" class="form-control" id="artistId" [(ngModel)]="event.artistId">
   </div>
 </div>
 <div class="modal-footer">

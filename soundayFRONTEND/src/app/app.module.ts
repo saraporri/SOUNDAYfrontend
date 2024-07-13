@@ -22,13 +22,12 @@ export function tokenGetter() {
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule,
+    AuthModule, 
     HttpClientModule,
     JwtModule.forRoot({
       config: {
         tokenGetter: tokenGetter,
         allowedDomains: ['localhost:8080'], // Aggiorna con il tuo dominio backend
-       
       }
     })
   ],

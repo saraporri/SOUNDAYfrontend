@@ -37,7 +37,12 @@ export class EventService {
       { headers: this.getAuthHeaders() }
     );
   }
-  addEvent(eventData: FormData): Observable<any> {
+  addEvent(eventData: FormData): Observable<any> {    const token = this.authService.getToken();
+     new HttpHeaders({
+      Authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json',
+    });
+
     return this.http.post<any>(this.apiUrl, eventData);
   }
 
@@ -45,10 +50,9 @@ export class EventService {
     return this.http.get<IEvent>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 
-  updateEvent(id: number, event: IEvent): Observable<IEvent> {
-    return this.http.put<IEvent>(`${this.apiUrl}/${id}`, event, { headers: this.getAuthHeaders() });
+  updateEvent(event: IEvent): Observable<IEvent> {
+    return this.http.put<IEvent>(`${this.apiUrl}/${event.id}`, event);
   }
-
   deleteEvent(id: number): Observable<string> {
     return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }

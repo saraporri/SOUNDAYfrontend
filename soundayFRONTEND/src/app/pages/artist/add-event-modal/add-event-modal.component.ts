@@ -11,13 +11,8 @@ import { AuthService } from '../../../auth/auth.service';
   styleUrls: ['./add-event-modal.component.scss']
 })
 export class AddEventModalComponent implements OnInit {
-  @Input() event: IEvent = {
-    title: '',
-    eventDate: new Date(),
-    dateTime: new Date(),
-    location: '',
-    city: '',
-    id: 0
+  @Input() event:Partial<IEvent> = {
+
   };
   user: IUser | null = null;
 
@@ -50,22 +45,17 @@ export class AddEventModalComponent implements OnInit {
     }
   }
 
-  save(): void {
-    this.event.eventDate = new Date(this.formattedEventDate);
-    this.event.dateTime = new Date(`${this.formattedEventDate}T${this.formattedEventTime}`);
+  save() {
 
-    if (this.user === null) {
-      console.error('User is not available');
-      return;
-    }
+
 
     const formData = new FormData();
-    formData.append('title', this.event.title);
-    formData.append('eventDate', this.event.eventDate.toISOString());
-    formData.append('dateTime', this.event.dateTime.toISOString());
-    formData.append('location', this.event.location);
-    formData.append('city', this.event.city);
-    formData.append('artistId', this.user.id.toString());
+    formData.append('title', this.event.title as string);
+    formData.append('eventDate', this.event.eventDate as any);
+    formData.append('dateTime', this.event.dateTime as any);
+    formData.append('location', this.event.location  as string);
+    formData.append('city', this.event.city  as string);
+    formData.append('artistId', this.event.artistId as any);
 
     // Logging formData without using formData.entries
     this.logFormData(formData);

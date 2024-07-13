@@ -5,10 +5,10 @@ export interface IEvent {
 
   title: string;
   eventDate: Date;
-  dateTime: Date;
+  dateTime: string;
   location: string;
   // tourPic
 city:string;
 
-  artistId?:IUser
+  artistId:IUser;
 }

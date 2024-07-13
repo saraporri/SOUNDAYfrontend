@@ -6,7 +6,7 @@ import { EventService } from './events.service';
 @NgModule({
   declarations: [EventsComponent],
   imports: [
-    CommonModule
+    CommonModule,
   ],
   providers: [EventService],
   exports: [EventsComponent]
