@@ -1,7 +1,7 @@
 <div class="background">
   <div class="d-flex justify-content-between align-items-center">
     <h1 class="toptitle">WELCOME BACK, {{ user?.username }}!</h1>
-    <button class="btn-top-right mt-5" >Update Artist Image</button>
+    <button class="btn-top-right mt-5">Update Artist Image</button>
   </div>
 
   <div class="btn-new-event-position">
@@ -16,39 +16,38 @@
   <p class="user-title">Your events</p>
   <div class="row">
     <div *ngFor="let event of events" class="card mx-2">
-      <div >
+      <div>
         <h5 class="card-title">{{ event.city }}</h5>
         <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
         <li class="list-group-item">{{ event.title }}</li>
-        <div class="gradient-line "></div>
+        <div class="gradient-line"></div>
 
         <li class="list-group-item">{{ getEventCounts(event.id)?.likesCount }} Likes</li>
         <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
         <button class="btn btn-danger" (click)="deleteEvent(event)">Delete</button>
-
       </div>
     </div>
   </div>
 
-<div class="gradient-line my-5"></div>
+  <div class="gradient-line my-5"></div>
 
   <p class="user-title">Past events</p>
   <div class="row">
     <div *ngFor="let event of pastEvents" class="mx-2">
       <div class="card">
         <h5 class="card-title">{{ event.city }}</h5>
-        <div class="gradient-line "></div>
+        <div class="gradient-line"></div>
 
         <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
         <li class="list-group-item">{{ event.title }}</li>
-        <div class="gradient-line "></div>
+        <div class="gradient-line"></div>
 
         <li class="list-group-item">{{ getEventCounts(event.id)?.participantsCount }} Attended</li>
       </div>
     </div>
   </div>
 
-<div class="gradient-line my-5"></div>
+  <div class="gradient-line my-5"></div>
 
   <p class="user-title">Your best fans</p>
   <div class="row">

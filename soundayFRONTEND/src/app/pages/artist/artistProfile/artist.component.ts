@@ -23,9 +23,9 @@ export class ArtistComponent implements OnInit {
   constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.loadEvents();
     this.authService.user$.subscribe(user => {
       this.user = user;
+      this.loadEvents();
     });
   }
 
@@ -34,19 +34,31 @@ export class ArtistComponent implements OnInit {
       this.eventService.getAll(),
       this.authService.user$
     ]).subscribe(([allEvents, user]) => {
-      const today = new Date();
-      this.events = allEvents;
-      this.pastEvents = allEvents.filter(event => new Date(event.eventDate) < today);
-
       if (user) {
+        console.log('User:', user);
+        console.log('All Events:', allEvents);
+
+        const artistEvents = allEvents.filter(event => {
+          console.log(`Event ${event.id} artistId:`, event.artistId);  // Aggiunto log dettagliato
+          return event.artistId && event.artistId.id === user.id;
+        });
+
+        console.log('Artist Events:', artistEvents);
+
+        const today = new Date();
+        this.events = artistEvents.filter(event => new Date(event.eventDate) >= today);
+        this.pastEvents = artistEvents.filter(event => new Date(event.eventDate) < today);
+
         const likedEventIds: number[] = user.likeEvents || [];
-        allEvents.forEach(event => {
-          this.eventCounts[event.id] = {
-            id: event.id,
-            likedByCurrentUser: likedEventIds.includes(event.id),
-            participantsCount: 0, // Default value
-            likesCount: 0 // Default value
-          };
+        artistEvents.forEach(event => {
+          if (event.id) {
+            this.eventCounts[event.id] = {
+              id: event.id,
+              likedByCurrentUser: likedEventIds.includes(event.id),
+              participantsCount: event.participantsCount || 0,
+              likesCount: event.likesCount || 0
+            };
+          }
         });
       }
     });
@@ -66,7 +78,6 @@ export class ArtistComponent implements OnInit {
     return this.eventCounts[eventId];
   }
 
-
   openAddEventModal(): void {
     const modalRef = this.modalService.open(AddEventModalComponent);
     modalRef.componentInstance.user = this.user;
@@ -79,6 +90,7 @@ export class ArtistComponent implements OnInit {
       console.log('Modal dismissed:', error);
     });
   }
+
   editEvent(event: IEvent) {
     const modalRef = this.modalService.open(EditEventModalComponent);
     modalRef.componentInstance.event = { ...event }; // Passa una copia dell'evento da modificare
@@ -91,16 +103,19 @@ export class ArtistComponent implements OnInit {
       }
     });
   }
+
   deleteEvent(event: IEvent): void {
     if (confirm(`Are you sure you want to delete the event "${event.title}"?`)) {
       this.eventService.deleteEvent(event.id).subscribe({
         next: (response) => {
           console.log('Event deleted successfully:', response);
           this.events = this.events.filter(e => e.id !== event.id);  // Rimuovi l'evento dalla lista
+          this.pastEvents = this.pastEvents.filter(e => e.id !== event.id); // Rimuovi l'evento dai passati
         },
         error: (error) => {
           console.error('Error deleting event:', error);
         }
       });
     }
-  }}
+  }
+}
