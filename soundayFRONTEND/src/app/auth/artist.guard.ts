@@ -1,45 +1,41 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, GuardResult, MaybeAsync, Router, RouterStateSnapshot } from '@angular/router';
-import { map } from 'rxjs';
-import { IUser } from '../models/i-user';
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { AuthService } from './auth.service';
-
-type AccessData = {
-  token: string,
-  user: IUser
-}
-
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminGuard {
+export class AdminGuard implements CanActivate, CanActivateChild {
 
   constructor(
-    private authSvc:AuthService,
-    private router:Router
-    ){}
+    private authSvc: AuthService,
+    private router: Router
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-      const userJson = localStorage.getItem('accessData')
-      const accessData:AccessData = JSON.parse(userJson!)
+    state: RouterStateSnapshot): Observable<boolean> {
+    const userJson = localStorage.getItem('accessData');
+    const accessData = userJson ? JSON.parse(userJson) : null;
+
     return this.authSvc.isLoggedIn$.pipe(
       map(isLoggedIn => {
-        if (isLoggedIn && accessData.user.roles == "ARTIST") {
+        if (isLoggedIn && accessData && accessData.user.roles === "ARTIST") {
           return true;
         } else {
           this.router.navigate(['homepage']);
           return false;
         }
       })
-    );;
+    );
   }
+
   canActivateChild(
     childRoute: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): MaybeAsync<GuardResult> {
-    return this.canActivate(childRoute,state);
+    state: RouterStateSnapshot): Observable<boolean> {
+    return this.canActivate(childRoute, state);
   }
 
 }

@@ -55,7 +55,7 @@ export class AddEventModalComponent implements OnInit {
     formData.append('dateTime', this.event.dateTime as any);
     formData.append('location', this.event.location  as string);
     formData.append('city', this.event.city  as string);
-    formData.append('artistId', this.event.artistId as any);
+    formData.append('artistId', this.event.artist as any);
 
     // Logging formData without using formData.entries
     this.logFormData(formData);

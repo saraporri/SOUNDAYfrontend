@@ -11,5 +11,5 @@ export interface IEvent extends CountsAndLike{
   // tourPic
 city:string;
 
-  artistId:IUser;
+  artist:IUser;
 }

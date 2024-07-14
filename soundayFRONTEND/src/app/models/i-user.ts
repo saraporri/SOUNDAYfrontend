@@ -1,3 +1,5 @@
+import { Iroles } from "./iroles";
+
 export interface IUser {
   id: number;
 
@@ -11,7 +13,7 @@ export interface IUser {
 
   lastName: string;
 
-  roles: string;
+  roles: Iroles[];
 
   followersCount: number;
 

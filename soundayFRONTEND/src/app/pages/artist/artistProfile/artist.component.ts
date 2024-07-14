@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { IEvent } from '../../../models/i-event';
 import { EditEventModalComponent } from "../edit-event-modal/edit-event-modal.component";
@@ -39,8 +39,8 @@ export class ArtistComponent implements OnInit {
         console.log('All Events:', allEvents);
 
         const artistEvents = allEvents.filter(event => {
-          console.log(`Event ${event.id} artistId:`, event.artistId);  // Aggiunto log dettagliato
-          return event.artistId && event.artistId.id === user.id;
+          console.log(`Event ${event.id} artistId:`, event.artist?.id);  // Aggiungi il log dettagliato
+          return event.artist && event.artist.id === user.id;
         });
 
         console.log('Artist Events:', artistEvents);

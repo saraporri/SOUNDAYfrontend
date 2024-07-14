@@ -1,3 +1,5 @@
+import { Iroles } from "./iroles";
+
 export interface Iregister {
 
   username: string;
@@ -9,5 +11,5 @@ export interface Iregister {
   firstName: string;
 
   lastName: string;
-  roles:string;
+  roles:Iroles[];
 }

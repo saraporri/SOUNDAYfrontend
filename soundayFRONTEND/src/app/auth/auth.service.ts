@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, BehaviorSubject, tap } from 'rxjs';
+import { Observable, BehaviorSubject, tap, map } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { ILogin } from '../models/i-login';
 import { JwtHelperService } from '@auth0/angular-jwt';
@@ -20,12 +20,15 @@ export class AuthService {
     this.restoreUser();
   }
 
+  get isLoggedIn$(): Observable<boolean> {
+    return this.user$.pipe(map(user => !!user));
+  }
+
   registerUser(user: Iregister): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/users/register`, user);
   }
 
   registerArtist(artist: Iregister): Observable<any> {
-    artist.roles = 'artist';
     return this.http.post<any>(`${this.apiUrl}/users/registerArtist`, artist);
   }
 
@@ -50,6 +53,7 @@ export class AuthService {
   getToken(): string {
     return localStorage.getItem('token') || '';
   }
+
   setUser(user: IUser): void {
     this.authSubject.next(user);
     localStorage.setItem('user', JSON.stringify(user));

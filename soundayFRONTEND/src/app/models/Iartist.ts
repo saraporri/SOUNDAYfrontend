@@ -1,3 +1,5 @@
+import { Iroles } from "./iroles";
+
 export interface Artist {
   username: string;
 
@@ -8,5 +10,5 @@ export interface Artist {
   firstName: string;
 
   lastName: string;
-  roles:string;
+  roles:Iroles[];
 }

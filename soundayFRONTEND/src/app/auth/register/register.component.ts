@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from '../auth.service';
 import { Iregister } from '../../models/iregister';
+import { Iroles } from '../../models/iroles';
 import { Artist } from '../../models/Iartist';
 
 @Component({
@@ -16,7 +17,7 @@ export class RegisterComponent {
     email: '',
     firstName: '',
     lastName: '',
-    roles: '',
+    roles: [] as Iroles[]
   };
 
   artist: Artist = {
@@ -25,7 +26,7 @@ export class RegisterComponent {
     email: '',
     firstName: '',
     lastName: '',
-    roles: '',
+    roles: [] as Iroles[]
   };
 
   selectedRole: string = '';
@@ -33,7 +34,7 @@ export class RegisterComponent {
   constructor(
     private authSvc: AuthService,
     private router: Router
-  ) { }
+  ) {}
 
   onRoleChange(event: any) {
     this.selectedRole = event.target.value;
@@ -41,6 +42,7 @@ export class RegisterComponent {
 
   signUp() {
     if (this.selectedRole === 'fan') {
+      this.registerData.roles = [{ roleType: 'USER' }]; // Set the role to USER
       this.authSvc.registerUser(this.registerData).subscribe(
         (response) => {
           if (response && response.token && response.user) {
@@ -61,7 +63,7 @@ export class RegisterComponent {
       this.artist.lastName = this.registerData.lastName;
       this.artist.email = this.registerData.email;
       this.artist.password = this.registerData.password;
-      this.artist.roles = 'artist'; // Setting the role to artist
+      this.artist.roles = [{ roleType: 'ARTIST' }]; // Set the role to ARTIST
 
       this.authSvc.registerArtist(this.artist).subscribe(
         (response) => {
