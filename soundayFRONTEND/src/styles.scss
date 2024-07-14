@@ -13,6 +13,7 @@ margin-left: 2rem;   text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.8);
 
 body
 {font-family: "Quicksand";
+  background-color: #dfdfdf;
 
 }
 
@@ -212,3 +213,7 @@ filter: grayscale(100%);
 }
 
 
+.user-title{  font-family: 'Playfair Display', serif;
+font-size: 2rem;
+font-weight: bolder;
+ }

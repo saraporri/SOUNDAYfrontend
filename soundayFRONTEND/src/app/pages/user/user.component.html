@@ -19,7 +19,7 @@
 </div>
 
 <div class="container my-5">
-  <p>Your upcoming events</p>
+  <p class="user-title">Your upcoming events</p>
   <div class="row">
     <div *ngFor="let event of events" class="card mx-2">
       <h5 *ngIf="event.artistId" class="card-title">{{ event.artistId.username }}</h5>
@@ -58,12 +58,11 @@
       </div>
     </div>
   </div>
-</div>
 
 <div class="gradient-line my-5"></div>
 
 <div>
-  <p>You were there!</p>
+  <p class="user-title">You were there!</p>
   <div class="row">
     <div *ngFor="let event of pastEvents" class="card mx-2">
       <h5 *ngIf="event.artistId" class="card-title">{{ event.artistId.username }}</h5>
