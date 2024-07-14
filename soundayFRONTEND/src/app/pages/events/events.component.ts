@@ -34,12 +34,13 @@ export class EventsComponent implements OnInit {
       const today = new Date();
       this.events = events.map(event => ({
         ...event,
-        likedByCurrentUser: this.user?.likeEvents.includes(event.id) || false,
+        likedByCurrentUser: this.user?.likeEvents?.includes(event.id) || false,
         participantsCount: event.participantsCount || 0,
         likesCount: event.likesCount || 0
-      }));
-      this.pastEvents = this.events.filter(event => new Date(event.eventDate) < today);
-      this.events = this.events.filter(event => new Date(event.eventDate) >= today);
+      }))
+      .filter(event => new Date(event.eventDate) >= today) // Filter events from today onwards
+      .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()); // Sort by event date
+      console.log('Filtered and Sorted Events:', this.events); // Debug log to see the sorted events
     });
   }
 

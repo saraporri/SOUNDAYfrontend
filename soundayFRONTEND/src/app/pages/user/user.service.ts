@@ -39,4 +39,13 @@ export class UserService {
     });
     return this.http.get<IEvent[]>(`${environment.apiUrl}/events`, { headers });
   }
+
+
+  getArtists(): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${this.apiUrl}/artists`);
+  }
+
+  likeArtist(userId: number, artistId: number): Observable<any> {
+    return this.http.post(`${this.apiUrl}/likeArtist/${userId}/${artistId}`, {});
+  }
 }

@@ -18,7 +18,8 @@ const routes: Routes = [  {path: '', component: LandingPageComponent },
 {path:"show-artists",component:ShowArtistsComponent},
   { path: 'artist', loadChildren: () => import('./pages/artist/artist.module').then(m => m.ArtistModule) },
   { path: 'events', loadChildren: () => import('./pages/events/events.module').then(m => m.EventsModule) },
-  { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) }
+  { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
+  { path: 'artists', component: ShowArtistsComponent },
 ];
 
 @NgModule({

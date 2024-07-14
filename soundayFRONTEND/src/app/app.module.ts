@@ -17,12 +17,12 @@ export function tokenGetter() {
   declarations: [
     AppComponent,
     NavbarComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule, 
+    AuthModule,
     HttpClientModule,
     JwtModule.forRoot({
       config: {

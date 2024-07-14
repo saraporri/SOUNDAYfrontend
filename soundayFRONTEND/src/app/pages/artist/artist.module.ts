@@ -11,7 +11,7 @@ import { ShowArtistsComponent } from './show-artists/show-artists.component';
 @NgModule({
   declarations: [
     ArtistComponent,
-    AddEventModalComponent,EditEventModalComponent, ShowArtistsComponent
+    AddEventModalComponent,EditEventModalComponent,ShowArtistsComponent
   ],
   imports: [
     CommonModule,
