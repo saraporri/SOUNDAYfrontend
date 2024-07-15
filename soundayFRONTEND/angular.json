@@ -76,10 +76,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "sounday:build:production"
+              "buildTarget": "sounday:build:production"
             },
             "development": {
-              "browserTarget": "sounday:build:development"
+              "buildTarget": "sounday:build:development"
             }
           },
           "defaultConfiguration": "development"
