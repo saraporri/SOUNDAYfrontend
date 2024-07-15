@@ -13,8 +13,8 @@ import { CountsAndLike } from '../../models/counts-and-like';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent implements OnInit {
-  events: (IEvent & CountsAndLike)[] = [];
-  pastEvents: (IEvent & CountsAndLike)[] = [];
+  events: IEvent[] = [];
+  pastEvents: IEvent[] = [];
   user: IUser | null = null;
   searchQuery: string = '';
   isLoggedIn: boolean = false;
@@ -30,21 +30,19 @@ export class UserComponent implements OnInit {
   }
 
   loadEvents(): void {
-    this.eventService.getAll().subscribe(events => {
-      const today = new Date();
-      const userLikeEvents = this.user?.likeEvents || [];  // Use an empty array if user or likeEvents is undefined
-      this.events = events.map(event => ({
-        ...event,
-        likedByCurrentUser: userLikeEvents.includes(event.id),
-        participantsCount: event.participantsCount || 0,
-        likesCount: event.likesCount || 0
-      }));
-      this.pastEvents = this.events.filter(event => new Date(event.eventDate) < today);
-      this.events = this.events.filter(event => new Date(event.eventDate) >= today);
-    });
+    if (this.user) {
+      const userId = this.user.id;
+      this.eventService.getLikedEvents(userId).subscribe(likedEvents => {
+        this.events = likedEvents.filter(event => new Date(event.eventDate) >= new Date());
+      });
+
+      this.eventService.getParticipatedEvents(userId).subscribe(participatedEvents => {
+        this.pastEvents = participatedEvents.filter(event => new Date(event.eventDate) < new Date());
+      });
+    }
   }
 
-  toggleLike(event: CountsAndLike): void {
+  toggleLike(event: IEvent): void {
     if (this.user) {
       this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
         event.likedByCurrentUser = !event.likedByCurrentUser;

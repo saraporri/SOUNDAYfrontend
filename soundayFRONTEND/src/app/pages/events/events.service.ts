@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
 import { IEvent } from '../../models/i-event';
-import { IUser } from '../../models/i-user';
 
 @Injectable({
   providedIn: 'root',
@@ -26,8 +25,12 @@ export class EventService {
     return this.http.get<IEvent[]>(this.apiUrl, { headers: this.getAuthHeaders() });
   }
 
-  getArtistById(artistId: number): Observable<IUser> {
-    return this.http.get<IUser>(`${environment.apiUrl}/users/${artistId}`, { headers: this.getAuthHeaders() });
+  getLikedEvents(userId: number): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(`${this.apiUrl}/liked?userId=${userId}`, { headers: this.getAuthHeaders() });
+  }
+
+  getParticipatedEvents(userId: number): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(`${this.apiUrl}/participated?userId=${userId}`, { headers: this.getAuthHeaders() });
   }
 
   toggleLike(eventId: number, liked: boolean): Observable<any> {

@@ -33,8 +33,8 @@
 
   <p class="user-title">Past events</p>
   <div class="row">
-    <div *ngFor="let event of pastEvents" class="mx-2">
-      <div class="card">
+    <div *ngFor="let event of pastEvents" class="card m-2">
+
         <h5 class="card-title">{{ event.city }}</h5>
         <div class="gradient-line"></div>
 
@@ -44,7 +44,6 @@
 
         <li class="list-group-item">{{ getEventCounts(event.id)?.participantsCount }} Attended</li>
       </div>
-    </div>
   </div>
 
   <div class="gradient-line my-5"></div>
