@@ -23,13 +23,14 @@
   <div class="row">
     <div *ngFor="let event of events" class="card mx-2">
       <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username }}</h5>
+      
       <li class="list-group-item">{{ event.title }}</li>
-      <div class="gradient-line"></div>
+      <div class="gradient-line my-2"></div>
       <li class="list-group-item">{{ event.city }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.dateTime }}</li>
-      <div class="gradient-line"></div>
-      <li class="list-group-item">
+      <div class="gradient-line my-2"></div>
+      <li class="list-group-item ">
         <div class="con-like">
           <input class="like" type="checkbox" title="like" [checked]="event.likedByCurrentUser" (change)="toggleLike(event)">
           <div class="checkmark">
@@ -48,12 +49,12 @@
               <polygon class="poly" points="80,80 70,70"></polygon>
             </svg>
           </div>
-        </div>{{ event.likesCount }}
+        </div>
       </li>
-      <div class="card-body2">
+      <div class="card-body2 mt-2">
         <li class="list-group-item">
           <button class="btn" (click)="incrementAttended(event.id)">I WILL BE THERE!</button>
-          {{ event.participantsCount }} Attended
+         <div> {{ event.participantsCount }} will attend</div>
         </li>
       </div>
     </div>

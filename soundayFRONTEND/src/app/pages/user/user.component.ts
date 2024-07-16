@@ -31,25 +31,35 @@ export class UserComponent implements OnInit {
   loadEvents(): void {
     if (this.user) {
       const userId = this.user.id;
+
+      // Caricamento degli eventi apprezzati
       this.eventService.getLikedEvents(userId).subscribe(likedEvents => {
-        this.events = likedEvents.map(event => ({
-          ...event,
-          likedByCurrentUser: true,
-          participantsCount: event.participantsCount || 0,
-          likesCount: event.likesCount || 0
-        })).filter(event => new Date(event.eventDate) >= new Date());
+        this.events = likedEvents
+          .filter(event => new Date(event.eventDate) >= new Date())
+          .map(event => ({
+            ...event,
+            likedByCurrentUser: true,
+            participantsCount: event.participantsCount || 0,
+            likesCount: event.likesCount || 0
+          }))
+          .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
       });
 
+      // Caricamento degli eventi partecipati
       this.eventService.getParticipatedEvents(userId).subscribe(participatedEvents => {
-        this.pastEvents = participatedEvents.map(event => ({
-          ...event,
-          likedByCurrentUser: this.user?.likeEvents.includes(event.id) || false,
-          participantsCount: event.participantsCount || 0,
-          likesCount: event.likesCount || 0
-        })).filter(event => new Date(event.eventDate) < new Date());
+        this.pastEvents = participatedEvents
+          .filter(event => new Date(event.eventDate) < new Date())
+          .map(event => ({
+            ...event,
+            likedByCurrentUser: this.user?.likeEvents.includes(event.id) || false,
+            participantsCount: event.participantsCount || 0,
+            likesCount: event.likesCount || 0
+          }))
+          .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
       });
     }
   }
+
 
   toggleLike(event: IEvent): void {
     if (this.user) {

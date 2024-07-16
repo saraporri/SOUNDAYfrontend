@@ -2,12 +2,12 @@
   <div class="row">
     <div *ngFor="let event of events" class="card m-2">
       <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username }}</h5>
-      <div class="gradient-line"></div>
+      <div class="gradient-line my-2"></div>
 
       <li class="list-group-item">{{ event.title }}</li>
       <li class="list-group-item">{{ event.city }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
-      <div class="gradient-line"></div>
+      <div class="gradient-line my-2"></div>
 
       <li class="list-group-item" *ngIf="isLoggedIn">
         <div class="con-like">
