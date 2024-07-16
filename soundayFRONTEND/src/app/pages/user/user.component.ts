@@ -32,22 +32,33 @@ export class UserComponent implements OnInit {
     if (this.user) {
       const userId = this.user.id;
       this.eventService.getLikedEvents(userId).subscribe(likedEvents => {
-        this.events = likedEvents.filter(event => new Date(event.eventDate) >= new Date());
+        this.events = likedEvents.map(event => ({
+          ...event,
+          likedByCurrentUser: true,
+          participantsCount: event.participantsCount || 0,
+          likesCount: event.likesCount || 0
+        })).filter(event => new Date(event.eventDate) >= new Date());
       });
 
       this.eventService.getParticipatedEvents(userId).subscribe(participatedEvents => {
-        this.pastEvents = participatedEvents.filter(event => new Date(event.eventDate) < new Date());
+        this.pastEvents = participatedEvents.map(event => ({
+          ...event,
+          likedByCurrentUser: this.user?.likeEvents.includes(event.id) || false,
+          participantsCount: event.participantsCount || 0,
+          likesCount: event.likesCount || 0
+        })).filter(event => new Date(event.eventDate) < new Date());
       });
     }
   }
-
   toggleLike(event: IEvent): void {
     if (this.user) {
       this.eventService.toggleLike(event.id, this.user.id).subscribe(() => {
         event.likedByCurrentUser = !event.likedByCurrentUser;
         if (event.likedByCurrentUser) {
-          this.events.push(event);
+          event.likesCount++;
+          this.events = [...this.events.filter(e => e.id !== event.id), event]; // Assicura che non ci siano duplicati
         } else {
+          event.likesCount--;
           this.events = this.events.filter(e => e.id !== event.id);
         }
       });
@@ -55,6 +66,8 @@ export class UserComponent implements OnInit {
       console.log('User not logged in');
     }
   }
+
+
 
   incrementAttended(eventId: number): void {
     const event = this.events.find(e => e.id === eventId);
