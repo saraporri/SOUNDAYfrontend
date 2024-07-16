@@ -66,6 +66,8 @@ export class EventService {
   getEventsByArtist(artistId: number): Observable<IEvent[]> {
     return this.http.get<IEvent[]>(`${this.apiUrl}/artist/${artistId}`, { headers: this.getAuthHeaders() });
   }
-
+  searchEvents(query: string): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(`${this.apiUrl}/search?query=${query}`, { headers: this.getAuthHeaders() });
+  }
 }
 

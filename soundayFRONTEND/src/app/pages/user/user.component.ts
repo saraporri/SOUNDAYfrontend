@@ -5,6 +5,8 @@ import { IUser } from '../../models/i-user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { EventService } from '../events/events.service';
+import { Router } from '@angular/router';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -15,10 +17,19 @@ export class UserComponent implements OnInit {
   events: IEvent[] = [];
   pastEvents: IEvent[] = [];
   user: IUser | null = null;
+  searchResults: { events: IEvent[], artists: IUser[] } = { events: [], artists: [] };
+
   searchQuery: string = '';
   isLoggedIn: boolean = false;
 
-  constructor(private eventService: EventService, private authService: AuthService, private modalService: NgbModal) {}
+  constructor(
+    private eventService: EventService,
+    private userService: UserService,
+    private authService: AuthService,
+    private modalService: NgbModal,
+    public router: Router // Cambiato da private a public
+
+  ) {}
 
   ngOnInit(): void {
     this.authService.user$.subscribe(user => {
@@ -62,7 +73,6 @@ export class UserComponent implements OnInit {
     }
   }
 
-
   toggleLike(event: IEvent): void {
     if (this.user) {
       this.eventService.toggleLike(event.id, this.user.id).subscribe(() => {
@@ -101,10 +111,6 @@ export class UserComponent implements OnInit {
     }
   }
 
-  onSearch(): void {
-    console.log(this.searchQuery);
-  }
-
   editProfile(): void {
     const modalRef = this.modalService.open(EditProfileModalComponent);
     modalRef.componentInstance.user = { ...this.user };
@@ -117,4 +123,30 @@ export class UserComponent implements OnInit {
       console.log('Modal dismissed:', error);
     });
   }
-}
+
+  search(): void {
+    if (this.searchQuery.trim()) {
+      this.eventService.searchEvents(this.searchQuery).subscribe({
+        next: (events) => {
+          if (events.length > 0) {
+            this.searchResults.events = events;
+            this.searchResults.artists = [];
+          } else {
+            this.userService.searchArtists(this.searchQuery).subscribe({
+              next: (artists) => {
+                if (artists.length > 0) {
+                  this.searchResults.artists = artists;
+                  this.searchResults.events = [];
+                } else {
+                  console.error('No events or artists found');
+                }
+              },
+              error: (err) => console.error('Error searching artists:', err)
+            });
+          }
+        },
+        error: (err) => console.error('Error searching events:', err)
+      });
+    }
+  }
+  }

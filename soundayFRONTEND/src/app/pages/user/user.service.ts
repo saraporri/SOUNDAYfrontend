@@ -46,5 +46,7 @@ export class UserService {
 
   likeArtist(userId: number, artistId: number): Observable<any> {
     return this.http.post(`${this.apiUrl}/likeArtist/${userId}/${artistId}`, {});
+  }  searchArtists(query: string): Observable<IUser[]> {
+    return this.http.get<IUser[]>(`${this.apiUrl}/searchArtists`, { params: { query } });
   }
 }
