@@ -14,7 +14,6 @@ import { EditEventModalComponent } from '../artist/edit-event-modal/edit-event-m
 })
 export class EventsComponent implements OnInit {
   events: (IEvent & CountsAndLike)[] = [];
-  pastEvents: (IEvent & CountsAndLike)[] = [];
   user: IUser | null = null;
   searchQuery: string = '';
   isLoggedIn: boolean = false;
@@ -30,19 +29,25 @@ export class EventsComponent implements OnInit {
   }
 
   loadEvents(): void {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Imposta l'ora a mezzanotte per confrontare solo la data
+
     this.eventService.getAll().subscribe(events => {
-      const today = new Date();
-      this.events = events.map(event => ({
-        ...event,
-        likedByCurrentUser: this.user?.likeEvents?.includes(event.id) || false,
-        participantsCount: event.participantsCount || 0,
-        likesCount: event.likesCount || 0
-      }))
-      .filter(event => new Date(event.eventDate) >= today)
-      .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
-      console.log('Filtered and Sorted Events:', this.events);
+      this.events = events
+        .filter(event => new Date(event.eventDate) >= today) // Filtra gli eventi più vecchi di oggi
+        .map(event => ({
+          ...event,
+          likedByCurrentUser: this.user?.likeEvents?.includes(event.id) || false,
+          participantsCount: event.participantsCount || 0,
+          likesCount: event.likesCount || 0
+        }))
+        .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()); // Ordina per data
+
+      console.log('Events:', this.events);
     });
   }
+
+
 
   toggleLike(event: IEvent): void {
     if (this.user) {
@@ -51,8 +56,13 @@ export class EventsComponent implements OnInit {
           event.likedByCurrentUser = !event.likedByCurrentUser;
           if (event.likedByCurrentUser) {
             event.likesCount++;
+            if (!this.user!.likeEvents) {
+              this.user!.likeEvents = [];
+            }
+            this.user!.likeEvents.push(event.id); // Aggiorna lo stato dell'utente
           } else {
             event.likesCount--;
+            this.user!.likeEvents = this.user!.likeEvents.filter(id => id !== event.id); // Rimuovi l'evento dalla lista dei like dell'utente
           }
         },
         error: (error) => {
