@@ -33,12 +33,9 @@ export class EventService {
     return this.http.get<IEvent[]>(`${this.apiUrl}/participated?userId=${userId}`, { headers: this.getAuthHeaders() });
   }
 
-  toggleLike(eventId: number, liked: boolean): Observable<any> {
-    return this.http.post<any>(
-      `${this.apiUrl}/${eventId}/like`,
-      { liked },
-      { headers: this.getAuthHeaders() }
-    );
+  toggleLike(eventId: number, userId: number): Observable<any> {
+    const body = { userId }; // Ensure the body contains the userId
+    return this.http.post<any>(`${this.apiUrl}/${eventId}/like`, body, { headers: this.getAuthHeaders() });
   }
 
   addEvent(eventData: FormData): Observable<any> {

@@ -38,17 +38,26 @@ export class EventsComponent implements OnInit {
         participantsCount: event.participantsCount || 0,
         likesCount: event.likesCount || 0
       }))
-      .filter(event => new Date(event.eventDate) >= today) // Filter events from today onwards
-      .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime()); // Sort by event date
-      console.log('Filtered and Sorted Events:', this.events); // Debug log to see the sorted events
+      .filter(event => new Date(event.eventDate) >= today)
+      .sort((a, b) => new Date(a.eventDate).getTime() - new Date(b.eventDate).getTime());
+      console.log('Filtered and Sorted Events:', this.events);
     });
   }
 
-  toggleLike(event: CountsAndLike): void {
+  toggleLike(event: IEvent): void {
     if (this.user) {
-      this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
-        event.likedByCurrentUser = !event.likedByCurrentUser;
-        event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
+      this.eventService.toggleLike(event.id, this.user.id).subscribe({
+        next: () => {
+          event.likedByCurrentUser = !event.likedByCurrentUser;
+          if (event.likedByCurrentUser) {
+            event.likesCount++;
+          } else {
+            event.likesCount--;
+          }
+        },
+        error: (error) => {
+          console.error('Error liking event:', error);
+        }
       });
     } else {
       console.log('User not logged in');
@@ -59,12 +68,11 @@ export class EventsComponent implements OnInit {
     const event = this.events.find(e => e.id === eventId);
     if (event) {
       event.participantsCount++;
-      // Add logic to update the participants count in the backend if necessary
     }
   }
 
   onSearch(): void {
-    console.log(this.searchQuery); // Handle the search logic here
+    console.log(this.searchQuery);
   }
 
   editProfile(): void {

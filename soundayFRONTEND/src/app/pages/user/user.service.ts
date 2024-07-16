@@ -40,7 +40,6 @@ export class UserService {
     return this.http.get<IEvent[]>(`${environment.apiUrl}/events`, { headers });
   }
 
-
   getArtists(): Observable<IUser[]> {
     return this.http.get<IUser[]>(`${this.apiUrl}/artists`);
   }

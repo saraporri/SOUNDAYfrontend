@@ -39,7 +39,7 @@ export class ArtistComponent implements OnInit {
         console.log('All Events:', allEvents);
 
         const artistEvents = allEvents.filter(event => {
-          console.log(`Event ${event.id} artistId:`, event.artist?.id);  // Aggiungi il log dettagliato
+          console.log(`Event ${event.id} artistId:`, event.artist?.id);
           return event.artist && event.artist.id === user.id;
         });
 
@@ -64,13 +64,14 @@ export class ArtistComponent implements OnInit {
     });
   }
 
-  toggleLike(eventId: number): void {
-    const counts = this.getEventCounts(eventId);
-    if (counts) {
-      this.eventService.toggleLike(eventId, !counts.likedByCurrentUser).subscribe(() => {
-        counts.likedByCurrentUser = !counts.likedByCurrentUser;
-        counts.likedByCurrentUser ? counts.likesCount++ : counts.likesCount--;
+  toggleLike(event: CountsAndLike): void {
+    if (this.user) {
+      this.eventService.toggleLike(event.id, this.user.id).subscribe(() => {
+        event.likedByCurrentUser = !event.likedByCurrentUser;
+        event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
       });
+    } else {
+      console.log('User not logged in');
     }
   }
 
@@ -93,13 +94,13 @@ export class ArtistComponent implements OnInit {
 
   editEvent(event: IEvent) {
     const modalRef = this.modalService.open(EditEventModalComponent);
-    modalRef.componentInstance.event = { ...event }; // Passa una copia dell'evento da modificare
+    modalRef.componentInstance.event = { ...event };
 
     modalRef.componentInstance.eventUpdated.subscribe((updatedEvent: IEvent) => {
       const index = this.events.findIndex(e => e.id === updatedEvent.id);
       if (index !== -1) {
         this.events[index] = updatedEvent;
-        this.loadEvents(); // Refresh the events to re-categorize them
+        this.loadEvents();
       }
     });
   }
@@ -109,8 +110,8 @@ export class ArtistComponent implements OnInit {
       this.eventService.deleteEvent(event.id).subscribe({
         next: (response) => {
           console.log('Event deleted successfully:', response);
-          this.events = this.events.filter(e => e.id !== event.id);  // Rimuovi l'evento dalla lista
-          this.pastEvents = this.pastEvents.filter(e => e.id !== event.id); // Rimuovi l'evento dai passati
+          this.events = this.events.filter(e => e.id !== event.id);
+          this.pastEvents = this.pastEvents.filter(e => e.id !== event.id);
         },
         error: (error) => {
           console.error('Error deleting event:', error);

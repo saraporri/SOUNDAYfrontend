@@ -5,7 +5,6 @@ import { IUser } from '../../models/i-user';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditProfileModalComponent } from './edit-profile-modal/edit-profile-modal.component';
 import { EventService } from '../events/events.service';
-import { CountsAndLike } from '../../models/counts-and-like';
 
 @Component({
   selector: 'app-user',
@@ -44,9 +43,13 @@ export class UserComponent implements OnInit {
 
   toggleLike(event: IEvent): void {
     if (this.user) {
-      this.eventService.toggleLike(event.id, !event.likedByCurrentUser).subscribe(() => {
+      this.eventService.toggleLike(event.id, this.user.id).subscribe(() => {
         event.likedByCurrentUser = !event.likedByCurrentUser;
-        event.likedByCurrentUser ? event.likesCount++ : event.likesCount--;
+        if (event.likedByCurrentUser) {
+          this.events.push(event);
+        } else {
+          this.events = this.events.filter(e => e.id !== event.id);
+        }
       });
     } else {
       console.log('User not logged in');
@@ -57,12 +60,11 @@ export class UserComponent implements OnInit {
     const event = this.events.find(e => e.id === eventId);
     if (event) {
       event.participantsCount++;
-      // Add logic to update the participants count in the backend if necessary
     }
   }
 
   onSearch(): void {
-    console.log(this.searchQuery); // Handle the search logic here
+    console.log(this.searchQuery);
   }
 
   editProfile(): void {
