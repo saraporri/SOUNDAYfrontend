@@ -21,12 +21,12 @@
 <div class="container my-5">
   <p class="user-title">Your upcoming events</p>
   <div class="row">
-    <div *ngFor="let event of events" class="card mx-2">
-      <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username }}</h5>
-      
+    <div *ngFor="let event of events" class="card m-4">
+      <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username  | uppercase }}</h5>
+
       <li class="list-group-item">{{ event.title }}</li>
       <div class="gradient-line my-2"></div>
-      <li class="list-group-item">{{ event.city }}</li>
+      <li class="list-group-item">{{ event.city  | uppercase  }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <li class="list-group-item">{{ event.dateTime }}</li>
       <div class="gradient-line my-2"></div>
@@ -66,7 +66,7 @@
     <p class="user-title">You were there!</p>
     <div class="row">
       <div *ngFor="let event of pastEvents" class="card mx-2">
-        <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username }}</h5>
+        <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username  | uppercase }}</h5>
         <p class="card-text">{{ event.title }}</p>
         <div class="gradient-line"></div>
         <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>

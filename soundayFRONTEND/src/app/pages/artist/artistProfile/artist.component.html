@@ -35,7 +35,7 @@
   <div class="row">
     <div *ngFor="let event of pastEvents" class="card m-2">
 
-        <h5 class="card-title">{{ event.city }}</h5>
+        <h5 class="card-title">{{ event.city  | uppercase }}</h5>
         <div class="gradient-line"></div>
 
         <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
