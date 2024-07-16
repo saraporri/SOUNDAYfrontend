@@ -50,6 +50,7 @@ export class UserComponent implements OnInit {
       });
     }
   }
+
   toggleLike(event: IEvent): void {
     if (this.user) {
       this.eventService.toggleLike(event.id, this.user.id).subscribe(() => {
@@ -67,14 +68,27 @@ export class UserComponent implements OnInit {
     }
   }
 
-
-
   incrementAttended(eventId: number): void {
-    const event = this.events.find(e => e.id === eventId);
-    if (event) {
-      event.participantsCount++;
+    if (this.user) {
+      const event = this.events.find(e => e.id === eventId);
+      if (event) {
+        this.eventService.participateEvent(eventId, this.user.id).subscribe(
+          response => {
+            console.log('Participation successful:', response);
+            if (response.status === 200) {
+              event.participantsCount++;
+            }
+          },
+          error => {
+            console.error('Error participating in event:', error);
+          }
+        );
+      }
+    } else {
+      console.log('User not logged in');
     }
   }
+
 
   onSearch(): void {
     console.log(this.searchQuery);

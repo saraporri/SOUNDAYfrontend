@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
 import { AuthService } from '../../auth/auth.service';
 import { IEvent } from '../../models/i-event';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -38,6 +37,14 @@ export class EventService {
     return this.http.post<any>(`${this.apiUrl}/${eventId}/like`, body, { headers: this.getAuthHeaders() });
   }
 
+  participateEvent(eventId: number, userId: number): Observable<any> {
+    const body = { userId };
+    return this.http.post<any>(`${this.apiUrl}/${eventId}/participate`, body, { headers: this.getAuthHeaders(), observe: 'response' });
+  }
+
+
+
+
   addEvent(eventData: FormData): Observable<any> {
     const headers = this.getAuthHeaders();
     headers.delete('Content-Type'); // FormData will set its own content type
@@ -57,3 +64,4 @@ export class EventService {
     return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
 }
+
