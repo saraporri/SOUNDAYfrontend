@@ -63,5 +63,9 @@ export class EventService {
   deleteEvent(id: number): Observable<string> {
     return this.http.delete<string>(`${this.apiUrl}/${id}`, { headers: this.getAuthHeaders() });
   }
+  getEventsByArtist(artistId: number): Observable<IEvent[]> {
+    return this.http.get<IEvent[]>(`${this.apiUrl}/artist/${artistId}`, { headers: this.getAuthHeaders() });
+  }
+
 }
 

@@ -8,6 +8,7 @@ import { ArtistComponent } from './pages/artist/artistProfile/artist.component';
 import { UserComponent } from './pages/user/user.component';
 import { EventsComponent } from './pages/events/events.component';
 import { ShowArtistsComponent } from './pages/artist/show-artists/show-artists.component';
+import { ShowSingleArtistComponent } from './pages/artist/show-single-artist/show-single-artist.component';
 
 const routes: Routes = [  {path: '', component: LandingPageComponent },
   { path: 'login', component: LoginComponent, canActivate: [GuestGuard] },
@@ -19,7 +20,8 @@ const routes: Routes = [  {path: '', component: LandingPageComponent },
   { path: 'artist', loadChildren: () => import('./pages/artist/artist.module').then(m => m.ArtistModule) },
   { path: 'events', loadChildren: () => import('./pages/events/events.module').then(m => m.EventsModule) },
   { path: 'user', loadChildren: () => import('./pages/user/user.module').then(m => m.UserModule) },
-  { path: 'artists', component: ShowArtistsComponent },
+  { path: 'artists', component: ShowArtistsComponent },  { path: 'artist/:id/:name', component: ShowSingleArtistComponent },
+
 ];
 
 @NgModule({

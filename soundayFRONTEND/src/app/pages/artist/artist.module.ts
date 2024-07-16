@@ -7,11 +7,12 @@ import { ArtistRoutingModule } from './artist-routing.module';
 import { AddEventModalComponent } from './add-event-modal/add-event-modal.component';
 import { EditEventModalComponent } from './edit-event-modal/edit-event-modal.component';
 import { ShowArtistsComponent } from './show-artists/show-artists.component';
+import { ShowSingleArtistComponent } from './show-single-artist/show-single-artist.component';
 
 @NgModule({
   declarations: [
     ArtistComponent,
-    AddEventModalComponent,EditEventModalComponent,ShowArtistsComponent
+    AddEventModalComponent,EditEventModalComponent,ShowArtistsComponent,ShowSingleArtistComponent
   ],
   imports: [
     CommonModule,

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from '../../../models/i-user';
 import { AuthService } from '../../../auth/auth.service';
 import { UserService } from '../../user/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-show-artists',
@@ -12,7 +13,7 @@ export class ShowArtistsComponent implements OnInit {
   artists: IUser[] = [];
   user: IUser | null = null;
 
-  constructor(private userService: UserService, private authService: AuthService) { }
+  constructor(private userService: UserService, private authService: AuthService,private router: Router) { }
 
   ngOnInit(): void {
     this.loadArtists();
@@ -37,18 +38,8 @@ export class ShowArtistsComponent implements OnInit {
       }
     });
   }
-  likeArtist(artistId: number): void {
-    if (this.user) {
-      this.userService.likeArtist(this.user.id, artistId).subscribe({
-        next: (response) => {
-          console.log('Artist liked successfully:', response);
-        },
-        error: (error) => {
-          console.error('Error liking artist:', error);
-        }
-      });
-    } else {
-      console.log('User not logged in');
-    }
+
+  showArtistPage(artist: IUser): void {
+    this.router.navigate(['/artist', artist.id, artist.username]);
   }
 }
