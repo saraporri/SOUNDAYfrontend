@@ -34,6 +34,7 @@ export class UserComponent implements OnInit {
 
       // Caricamento degli eventi apprezzati
       this.eventService.getLikedEvents(userId).subscribe(likedEvents => {
+        console.log('Liked Events:', likedEvents); // Debugging
         this.events = likedEvents
           .filter(event => new Date(event.eventDate) >= new Date())
           .map(event => ({
@@ -47,11 +48,12 @@ export class UserComponent implements OnInit {
 
       // Caricamento degli eventi partecipati
       this.eventService.getParticipatedEvents(userId).subscribe(participatedEvents => {
+        console.log('Participated Events:', participatedEvents); // Debugging
         this.pastEvents = participatedEvents
           .filter(event => new Date(event.eventDate) < new Date())
           .map(event => ({
             ...event,
-            likedByCurrentUser: this.user?.likeEvents.includes(event.id) || false,
+            likedByCurrentUser: this.user && this.user.likeEvents ? this.user.likeEvents.includes(event.id) : false,
             participantsCount: event.participantsCount || 0,
             likesCount: event.likesCount || 0
           }))
@@ -98,7 +100,6 @@ export class UserComponent implements OnInit {
       console.log('User not logged in');
     }
   }
-
 
   onSearch(): void {
     console.log(this.searchQuery);
