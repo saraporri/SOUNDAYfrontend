@@ -5,7 +5,7 @@
     <div *ngFor="let artist of artists" class="card m-4">
       <h5 class="card-title">{{ artist.username | uppercase }}</h5>
       <div class="gradient-line my-2"></div>
-      <button *ngIf="user" class="btn btn-primary" (click)="showArtistPage(artist)">SHOW ARTIST PAGE</button>
+      <button *ngIf="user" class="button mb-3" (click)="showArtistPage(artist)">SHOW ARTIST PAGE</button>
     </div>
   </div>
 </div>

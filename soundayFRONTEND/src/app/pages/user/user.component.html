@@ -35,7 +35,7 @@
       <h5 *ngIf="event.artist" class="card-title ">
         <a [routerLink]="['/artist', event.artist.id, event.artist.username]" class="artist-link">{{ event.artist.username | uppercase }}</a>
       </h5>
-      <li class="list-group-item">{{ event.title }}</li>
+      <li class="list-group-item ">{{ event.title }}</li>
       <div class="gradient-line my-2"></div>
       <li class="list-group-item">{{ event.city  | uppercase  }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
@@ -75,12 +75,12 @@
 
   <div>
     <p class="user-title">You were there!</p>
-    <div class="row">
+    <div class="row justify-content-around">
       <div *ngFor="let event of pastEvents" class="card mx-2">
         <h5 *ngIf="event.artist" class="card-title ">
           <a [routerLink]="['/artist', event.artist.id, event.artist.username]" class="artist-link">{{ event.artist.username | uppercase }}</a>
         </h5>        <p class="card-text">{{ event.title }}</p>
-        <div class="gradient-line my-2"></div>
+        <div class="gradient-line mb-2"></div>
         <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
         <div class="gradient-line my-2"></div>
         <div class="card-body2">

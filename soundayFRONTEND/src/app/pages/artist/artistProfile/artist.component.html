@@ -13,47 +13,52 @@
 </div>
 
 <div class="container my-5">
-  <p class="user-title">Your events</p>
-  <div class="row">
-    <div *ngFor="let event of events" class="card mx-2">
+  <p class="user-title mb-4">Your events</p>
+  <div class="row justify-content-around">
+    <div *ngFor="let event of events" class="card mx-2 ">
       <div>
         <h5 class="card-title">{{ event.city }}</h5>
-        <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
-        <li class="list-group-item">{{ event.title }}</li>
-        <div class="gradient-line"></div>
+        <div class="gradient-line my-2"></div>
+        <div class="d-flex flex-column">
+          <li class="list-group-item mt-auto order-2">{{ event.eventDate | date: 'longDate' }}</li>
+          <li class="list-group-item event-title order-1">{{ event.title }}</li>
+        </div>
+        <div class="gradient-line my-2"></div>
 
-        <li class="list-group-item">{{ getEventCounts(event.id)?.likesCount }} Likes</li>
-        <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
+        <li class="list-group-item ">{{ getEventCounts(event.id)?.likesCount }} Likes</li>
+     <div class="my-3">   <button class="btn btn-primary" (click)="editEvent(event)">Edit</button>
         <button class="btn btn-danger" (click)="deleteEvent(event)">Delete</button>
-      </div>
+      </div></div>
     </div>
   </div>
 
   <div class="gradient-line my-5"></div>
 
-  <p class="user-title">Past events</p>
-  <div class="row">
+  <p class="user-title mb-4">Past events</p>
+  <div class="row justify-content-around">
     <div *ngFor="let event of pastEvents" class="card m-2">
 
         <h5 class="card-title">{{ event.city  | uppercase }}</h5>
-        <div class="gradient-line"></div>
+        <div class="gradient-line my-2"></div>
 
-        <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
-        <li class="list-group-item">{{ event.title }}</li>
-        <div class="gradient-line"></div>
+        <div class="d-flex flex-column">
+          <li class="list-group-item mt-auto order-2">{{ event.eventDate | date: 'longDate' }}</li>
+          <li class="list-group-item event-title order-1">{{ event.title }}</li>
+        </div>
+        <div class="gradient-line my-2"></div>
 
-        <li class="list-group-item">{{ getEventCounts(event.id)?.participantsCount }} Attended</li>
+        <li class="list-group-item mb-3">{{ getEventCounts(event.id)?.participantsCount }} Attended</li>
       </div>
   </div>
 
   <div class="gradient-line my-5"></div>
 
-  <p class="user-title">Your best fans</p>
-  <div class="row">
+  <p class="user-title mb-4">Your best fans</p>
+  <div class="row justify-content-around">
     <div class="card mx-2">
       <h5 class="card-title">FANGIRL</h5>
-      <div class="gradient-line"></div>
-      <li class="list-group-item">attended 45 concerts</li>
+      <div class="gradient-line my-2"></div>
+      <li class="list-group-item mb-3">attended 45 concerts</li>
     </div>
   </div>
 </div>
