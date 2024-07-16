@@ -47,8 +47,6 @@ export class EventsComponent implements OnInit {
     });
   }
 
-
-
   toggleLike(event: IEvent): void {
     if (this.user) {
       this.eventService.toggleLike(event.id, this.user.id).subscribe({

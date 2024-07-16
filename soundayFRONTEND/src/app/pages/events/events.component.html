@@ -1,11 +1,13 @@
 <div class="container my-5">
-  <div class="row">
-    <div *ngFor="let event of events" class="card m-5">
-      <h5 *ngIf="event.artist" class="card-title">{{ event.artist.username  | uppercase  }}</h5>
+  <div class="row justify-content-around">
+    <div *ngFor="let event of events" class="card m-5 py-2">
+      <h5 *ngIf="event.artist" class="card-title ">
+        <a [routerLink]="['/artist', event.artist.id, event.artist.username]" class="artist-link">{{ event.artist.username | uppercase }}</a>
+      </h5>
       <div class="gradient-line my-2"></div>
 
-      <li class="list-group-item">{{ event.title }}</li>
-      <li class="list-group-item">{{ event.city  | uppercase  }}</li>
+      <li class="list-group-item event-title">{{ event.title }}</li>
+      <li class="list-group-item">{{ event.city | uppercase }}</li>
       <li class="list-group-item">{{ event.eventDate | date: 'longDate' }}</li>
       <div class="gradient-line my-2"></div>
 
