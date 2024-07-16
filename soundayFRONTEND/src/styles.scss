@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-
+$danger:#d2029b;
 /* Importing Bootstrap SCSS file. */
 @import 'bootstrap/scss/bootstrap';
 @import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
@@ -79,10 +79,6 @@ filter: grayscale(100%);
 .card:hover {
   transform: scale(1.05);
 }
-
-
-
-
 
 
 
@@ -213,7 +209,9 @@ filter: grayscale(100%);
 }
 
 
-.user-title{  font-family: 'Playfair Display', serif;
+.user-title{ 
+  font-family: 'Quicksand', serif;
 font-size: 2rem;
 font-weight: bolder;
+text-transform: uppercase;
  }

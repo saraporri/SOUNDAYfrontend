@@ -5,7 +5,7 @@
 </div>
 
 <div class="container my-5">
-  <p class="user-title">Upcoming events</p>
+  <p class="user-title t-shadow">Upcoming events</p>
   <div class="row justify-content-around">
     <div *ngIf="events.length === 0">No upcoming events found.</div>
     <div class="row justify-content-around">
@@ -44,7 +44,7 @@
 
   <div class="gradient-line my-5"></div>
 
-  <p class="user-title">Past events</p>
+  <p class="user-title t-shadow">Past events</p>
   <div class="row justify-content-around">
     <div *ngIf="pastEvents.length === 0">No past events found.</div>
     <div *ngFor="let event of pastEvents" class="card m-2">
@@ -59,7 +59,7 @@
 
   <div class="gradient-line my-5"></div>
 
-  <p class="user-title">Best fans</p>
+  <p class="user-title t-shadow">Best fans</p>
   <div class="row justify-content-around">
     <div class="card mx-2">
       <h5 class="card-title mt-2">FANGIRL</h5>

@@ -6,7 +6,7 @@
 
   <div class="search-bar-position">
     <div class="search-bar">
-      <input type="text" [(ngModel)]="searchQuery" (input)="search()" placeholder="Search for concerts, artists or cities..." class="ui-input">
+      <input type="text" [(ngModel)]="searchQuery" (input)="search()" placeholder="Search for concerts or artists..." class="ui-input">
       <div class="ui-input-underline"></div>
       <div class="ui-input-highlight"></div>
       <div class="ui-input-icon">
@@ -29,7 +29,7 @@
 </div>
 
 <div class="container my-5">
-  <p class="user-title">Your upcoming events</p>
+  <p class="user-title t-shadow mb-5">Your upcoming events</p>
   <div class="row justify-content-around">
     <div *ngFor="let event of events" class="card m-4">
       <h5 *ngIf="event.artist" class="card-title ">
@@ -74,9 +74,9 @@
   <div class="gradient-line my-5"></div>
 
   <div>
-    <p class="user-title">You were there!</p>
+    <p class="user-title t-shadow mb-5">You were there!</p>
     <div class="row justify-content-around">
-      <div *ngFor="let event of pastEvents" class="card mx-2">
+      <div *ngFor="let event of pastEvents" class="card mx-4">
         <h5 *ngIf="event.artist" class="card-title ">
           <a [routerLink]="['/artist', event.artist.id, event.artist.username]" class="artist-link">{{ event.artist.username | uppercase }}</a>
         </h5>        <p class="card-text">{{ event.title }}</p>
